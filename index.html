@@ -1,0 +1,6785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>E-Teaching</title>
+
+<style>
+/* =========================================================
+   E-TEACHING - SHADCN INSPIRED DESIGN
+   Frontend only: HTML + CSS + JavaScript
+   ========================================================= */
+
+:root {
+    --background: #f8fafc;
+    --foreground: #0f172a;
+    --card: #ffffff;
+    --muted: #f1f5f9;
+    --muted-foreground: #64748b;
+    --border: #e2e8f0;
+    --primary: #2563eb;
+    --primary-hover: #1d4ed8;
+    --primary-foreground: #ffffff;
+    --success: #16a34a;
+    --warning: #d97706;
+    --danger: #dc2626;
+    --purple: #7c3aed;
+    --sidebar: #ffffff;
+    --sidebar-hover: #f1f5f9;
+    --radius: 10px;
+    --shadow: 0 1px 3px rgba(0,0,0,.08);
+}
+
+[data-theme="dark"] {
+    --background: #020617;
+    --foreground: #f8fafc;
+    --card: #0f172a;
+    --muted: #1e293b;
+    --muted-foreground: #94a3b8;
+    --border: #334155;
+    --sidebar: #0f172a;
+    --sidebar-hover: #1e293b;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+                 "Segoe UI", sans-serif;
+    background: var(--background);
+    color: var(--foreground);
+}
+
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* =========================================================
+   LOGIN
+   ========================================================= */
+
+.login-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background:
+        radial-gradient(circle at top left, rgba(37,99,235,.15), transparent 35%),
+        radial-gradient(circle at bottom right, rgba(124,58,237,.12), transparent 35%),
+        var(--background);
+}
+
+.login-container {
+    width: 100%;
+    max-width: 440px;
+}
+
+.login-logo {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: var(--primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 22px;
+    margin: 0 auto 18px;
+}
+
+.login-title {
+    text-align: center;
+    font-size: 30px;
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+
+.login-subtitle {
+    text-align: center;
+    color: var(--muted-foreground);
+    margin-bottom: 28px;
+}
+
+.login-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: 0 20px 50px rgba(15,23,42,.08);
+    padding: 28px;
+}
+
+.form-group {
+    margin-bottom: 17px;
+}
+
+.form-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 7px;
+}
+
+.input,
+.select,
+.textarea {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--card);
+    color: var(--foreground);
+    padding: 10px 12px;
+    outline: none;
+    transition: .15s;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(37,99,235,.12);
+}
+
+.textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+.login-button {
+    width: 100%;
+    margin-top: 6px;
+}
+
+.demo-accounts {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.demo-account {
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+    padding: 12px;
+    background: var(--muted);
+    cursor: pointer;
+}
+
+.demo-account:hover {
+    border-color: var(--primary);
+}
+
+.demo-account-title {
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.demo-account-text {
+    font-size: 12px;
+    color: var(--muted-foreground);
+    margin-top: 4px;
+}
+
+/* =========================================================
+   APP LAYOUT
+   ========================================================= */
+
+.app {
+    min-height: 100vh;
+}
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 250px;
+    background: var(--sidebar);
+    border-right: 1px solid var(--border);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-brand {
+    height: 70px;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    border-bottom: 1px solid var(--border);
+}
+
+.brand-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+    background: var(--primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+}
+
+.brand-name {
+    font-size: 17px;
+    font-weight: 800;
+}
+
+.sidebar-role {
+    font-size: 11px;
+    color: var(--muted-foreground);
+}
+
+.sidebar-nav {
+    flex: 1;
+    padding: 15px 10px;
+    overflow-y: auto;
+}
+
+.nav-section {
+    margin-bottom: 18px;
+}
+
+.nav-section-title {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--muted-foreground);
+    font-weight: 700;
+    padding: 0 10px 7px;
+}
+
+.nav-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 11px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--foreground);
+    font-size: 13px;
+    text-align: left;
+    margin-bottom: 2px;
+}
+
+.nav-item:hover {
+    background: var(--sidebar-hover);
+}
+
+.nav-item.active {
+    background: #eff6ff;
+    color: var(--primary);
+    font-weight: 600;
+}
+
+[data-theme="dark"] .nav-item.active {
+    background: #172554;
+}
+
+.nav-icon {
+    width: 18px;
+    text-align: center;
+}
+
+.sidebar-footer {
+    padding: 12px;
+    border-top: 1px solid var(--border);
+}
+
+.user-mini {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 8px;
+}
+
+.avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #dbeafe;
+    color: #1d4ed8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.user-info {
+    min-width: 0;
+    flex: 1;
+}
+
+.user-name {
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.user-role {
+    font-size: 11px;
+    color: var(--muted-foreground);
+}
+
+.main {
+    margin-left: 250px;
+    min-height: 100vh;
+}
+
+.topbar {
+    height: 70px;
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 28px;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.page-title {
+    font-size: 20px;
+    font-weight: 750;
+}
+
+.breadcrumb {
+    color: var(--muted-foreground);
+    font-size: 12px;
+    margin-top: 2px;
+}
+
+.topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.content {
+    padding: 28px;
+    max-width: 1600px;
+    margin: auto;
+}
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.btn {
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--foreground);
+    border-radius: 8px;
+    padding: 8px 13px;
+    font-size: 13px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    transition: .15s;
+}
+
+.btn:hover {
+    background: var(--muted);
+}
+
+.btn-primary {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--primary-hover);
+}
+
+.btn-danger {
+    color: white;
+    background: var(--danger);
+    border-color: var(--danger);
+}
+
+.btn-success {
+    color: white;
+    background: var(--success);
+    border-color: var(--success);
+}
+
+.btn-sm {
+    padding: 6px 9px;
+    font-size: 12px;
+}
+
+.btn-icon {
+    width: 35px;
+    height: 35px;
+    padding: 0;
+}
+
+.btn-block {
+    width: 100%;
+}
+
+/* =========================================================
+   COMMON
+   ========================================================= */
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 22px;
+}
+
+.page-heading {
+    font-size: 24px;
+    font-weight: 800;
+    margin: 0 0 5px;
+}
+
+.page-description {
+    color: var(--muted-foreground);
+    font-size: 13px;
+}
+
+.actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.grid {
+    display: grid;
+    gap: 16px;
+}
+
+.grid-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.grid-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.grid-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+.card-header {
+    padding: 17px 18px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.card-title {
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.card-description {
+    font-size: 12px;
+    color: var(--muted-foreground);
+    margin-top: 3px;
+}
+
+.card-body {
+    padding: 18px;
+}
+
+.stat-card {
+    padding: 18px;
+}
+
+.stat-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.stat-label {
+    font-size: 12px;
+    color: var(--muted-foreground);
+    font-weight: 600;
+}
+
+.stat-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 9px;
+    background: #eff6ff;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stat-value {
+    font-size: 27px;
+    font-weight: 800;
+    margin-top: 10px;
+}
+
+.stat-change {
+    font-size: 11px;
+    margin-top: 5px;
+    color: var(--muted-foreground);
+}
+
+.text-success {
+    color: var(--success);
+}
+
+.text-warning {
+    color: var(--warning);
+}
+
+.text-danger {
+    color: var(--danger);
+}
+
+.text-muted {
+    color: var(--muted-foreground);
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 3px 8px;
+    font-size: 10px;
+    font-weight: 700;
+    border: 1px solid transparent;
+}
+
+.badge-blue {
+    color: #1d4ed8;
+    background: #dbeafe;
+}
+
+.badge-green {
+    color: #15803d;
+    background: #dcfce7;
+}
+
+.badge-yellow {
+    color: #a16207;
+    background: #fef9c3;
+}
+
+.badge-red {
+    color: #b91c1c;
+    background: #fee2e2;
+}
+
+.badge-purple {
+    color: #6d28d9;
+    background: #ede9fe;
+}
+
+.progress {
+    width: 100%;
+    height: 7px;
+    background: var(--muted);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: var(--primary);
+    border-radius: inherit;
+}
+
+.progress-row {
+    margin-bottom: 15px;
+}
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    margin-bottom: 6px;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th {
+    font-size: 11px;
+    color: var(--muted-foreground);
+    font-weight: 700;
+    text-align: left;
+    padding: 11px 15px;
+    background: var(--muted);
+    white-space: nowrap;
+}
+
+.table td {
+    font-size: 12px;
+    padding: 13px 15px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+}
+
+.table tr:last-child td {
+    border-bottom: none;
+}
+
+.table tr:hover td {
+    background: rgba(148,163,184,.05);
+}
+
+.list-item {
+    padding: 13px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.list-item:last-child {
+    border-bottom: none;
+}
+
+.flex {
+    display: flex;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.gap-8 {
+    gap: 8px;
+}
+
+.gap-12 {
+    gap: 12px;
+}
+
+.gap-16 {
+    gap: 16px;
+}
+
+.mb-16 {
+    margin-bottom: 16px;
+}
+
+.mb-20 {
+    margin-bottom: 20px;
+}
+
+.mt-16 {
+    margin-top: 16px;
+}
+
+/* =========================================================
+   COURSE
+   ========================================================= */
+
+.course-card {
+    overflow: hidden;
+    cursor: pointer;
+    transition: .18s;
+}
+
+.course-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(15,23,42,.1);
+}
+
+.course-cover {
+    height: 105px;
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    padding: 18px;
+    color: white;
+    position: relative;
+}
+
+.course-cover.green {
+    background: linear-gradient(135deg, #059669, #0d9488);
+}
+
+.course-cover.orange {
+    background: linear-gradient(135deg, #ea580c, #d97706);
+}
+
+.course-cover.pink {
+    background: linear-gradient(135deg, #db2777, #9333ea);
+}
+
+.course-code {
+    font-size: 10px;
+    opacity: .8;
+}
+
+.course-cover-title {
+    font-size: 16px;
+    font-weight: 800;
+    margin-top: 7px;
+}
+
+.course-body {
+    padding: 15px;
+}
+
+.course-description {
+    color: var(--muted-foreground);
+    font-size: 12px;
+    line-height: 1.5;
+    min-height: 36px;
+}
+
+.course-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 14px;
+}
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15,23,42,.55);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 1000;
+}
+
+.modal-overlay.show {
+    display: flex;
+}
+
+.modal {
+    width: 100%;
+    max-width: 620px;
+    max-height: 90vh;
+    overflow-y: auto;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    box-shadow: 0 25px 80px rgba(0,0,0,.2);
+}
+
+.modal-header {
+    padding: 17px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-title {
+    font-weight: 800;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.modal-footer {
+    padding: 14px 20px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+
+.toast-container {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.toast {
+    min-width: 280px;
+    max-width: 380px;
+    padding: 13px 15px;
+    border-radius: 9px;
+    background: var(--card);
+    color: var(--foreground);
+    border: 1px solid var(--border);
+    box-shadow: 0 12px 35px rgba(15,23,42,.15);
+    font-size: 13px;
+    animation: toastIn .2s ease;
+}
+
+.toast.success {
+    border-left: 4px solid var(--success);
+}
+
+.toast.error {
+    border-left: 4px solid var(--danger);
+}
+
+@keyframes toastIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =========================================================
+   DETAIL / LESSON / QUIZ
+   ========================================================= */
+
+.detail-hero {
+    padding: 25px;
+    border-radius: 13px;
+    color: white;
+    background: linear-gradient(135deg, #2563eb, #4f46e5);
+    margin-bottom: 18px;
+}
+
+.detail-hero h1 {
+    margin: 0 0 8px;
+    font-size: 26px;
+}
+
+.detail-hero p {
+    margin: 0;
+    opacity: .85;
+    font-size: 13px;
+}
+
+.lesson-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 13px;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    margin-bottom: 8px;
+    cursor: pointer;
+}
+
+.lesson-item:hover {
+    background: var(--muted);
+}
+
+.lesson-number {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.lesson-item.completed .lesson-number {
+    background: #dcfce7;
+    color: var(--success);
+}
+
+.quiz-question {
+    padding: 17px;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    margin-bottom: 14px;
+}
+
+.quiz-question-title {
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+
+.quiz-option {
+    display: block;
+    padding: 9px;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    margin-bottom: 7px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.quiz-option:hover {
+    background: var(--muted);
+}
+
+.quiz-option input {
+    margin-right: 8px;
+}
+
+.result-circle {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    border: 8px solid #dbeafe;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    font-weight: 800;
+    margin: 15px auto;
+}
+
+/* =========================================================
+   CALENDAR
+   ========================================================= */
+
+.calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.calendar-head {
+    padding: 10px;
+    background: var(--muted);
+    font-size: 11px;
+    font-weight: 700;
+    text-align: center;
+    border-right: 1px solid var(--border);
+}
+
+.calendar-day {
+    min-height: 100px;
+    padding: 8px;
+    border-top: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    font-size: 11px;
+}
+
+.calendar-day-number {
+    font-weight: 700;
+    margin-bottom: 7px;
+}
+
+.calendar-event {
+    background: #dbeafe;
+    color: #1d4ed8;
+    padding: 3px 5px;
+    border-radius: 4px;
+    margin-bottom: 3px;
+    font-size: 9px;
+}
+
+/* =========================================================
+   EMPTY
+   ========================================================= */
+
+.empty {
+    text-align: center;
+    padding: 50px 20px;
+    color: var(--muted-foreground);
+}
+
+.empty-icon {
+    font-size: 35px;
+    margin-bottom: 10px;
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+.mobile-menu {
+    display: none;
+}
+
+@media(max-width: 1000px) {
+    .sidebar {
+        transform: translateX(-100%);
+        transition: .2s;
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .main {
+        margin-left: 0;
+    }
+
+    .mobile-menu {
+        display: inline-flex;
+    }
+
+    .grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .grid-3 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media(max-width: 700px) {
+    .content {
+        padding: 17px;
+    }
+
+    .topbar {
+        padding: 0 17px;
+    }
+
+    .grid-2,
+    .grid-3,
+    .grid-4 {
+        grid-template-columns: 1fr;
+    }
+
+    .page-header {
+        flex-direction: column;
+    }
+
+    .page-heading {
+        font-size: 20px;
+    }
+
+    .calendar-day {
+        min-height: 70px;
+    }
+
+    .calendar-event {
+        display: none;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div id="root"></div>
+
+<div id="modalOverlay" class="modal-overlay">
+    <div class="modal">
+        <div class="modal-header">
+            <div id="modalTitle" class="modal-title"></div>
+            <button class="btn btn-icon" onclick="closeModal()">✕</button>
+        </div>
+        <div id="modalBody" class="modal-body"></div>
+        <div id="modalFooter" class="modal-footer"></div>
+    </div>
+</div>
+
+<div id="toastContainer" class="toast-container"></div>
+
+<script>
+/* =========================================================
+   E-TEACHING APPLICATION
+   ========================================================= */
+
+const STORAGE_KEY = "eteaching_demo_data";
+const SESSION_KEY = "eteaching_session";
+
+let state = {
+    role: null,
+    user: null,
+    page: "dashboard",
+    selectedCourseId: null,
+    selectedLessonId: null,
+    selectedAssignmentId: null,
+    selectedQuizId: null,
+    selectedStudentId: null
+};
+
+/* =========================================================
+   DEFAULT DATA
+   ========================================================= */
+
+const DEFAULT_DATA = {
+    courses: [
+        {
+            id: 1,
+            code: "CS101",
+            title: "Java Spring Boot",
+            description: "Learn REST API development with Spring Boot.",
+            teacher: "teacher",
+            category: "Programming",
+            students: 86,
+            progress: 78,
+            color: "blue"
+        },
+        {
+            id: 2,
+            code: "DB201",
+            title: "PostgreSQL Fundamentals",
+            description: "Database design, SQL and PostgreSQL.",
+            teacher: "teacher",
+            category: "Database",
+            students: 72,
+            progress: 65,
+            color: "green"
+        },
+        {
+            id: 3,
+            code: "WEB101",
+            title: "HTML, CSS & JavaScript",
+            description: "Build modern responsive web applications.",
+            teacher: "teacher",
+            category: "Web Development",
+            students: 95,
+            progress: 84,
+            color: "orange"
+        },
+        {
+            id: 4,
+            code: "DEV301",
+            title: "Software Engineering",
+            description: "Learn SDLC, Agile, Scrum and software design.",
+            teacher: "teacher",
+            category: "Software Engineering",
+            students: 58,
+            progress: 71,
+            color: "pink"
+        }
+    ],
+
+    lessons: [
+        { id: 1, courseId: 1, title: "Introduction to Spring Boot", duration: "35 min", completed: false },
+        { id: 2, courseId: 1, title: "Creating REST Controllers", duration: "45 min", completed: false },
+        { id: 3, courseId: 1, title: "Service and Repository Layer", duration: "50 min", completed: false },
+        { id: 4, courseId: 1, title: "JPA and Database", duration: "55 min", completed: false },
+
+        { id: 5, courseId: 2, title: "PostgreSQL Installation", duration: "30 min", completed: false },
+        { id: 6, courseId: 2, title: "SELECT and WHERE", duration: "40 min", completed: false },
+        { id: 7, courseId: 2, title: "JOIN Operations", duration: "50 min", completed: false },
+
+        { id: 8, courseId: 3, title: "HTML Fundamentals", duration: "40 min", completed: false },
+        { id: 9, courseId: 3, title: "CSS Layout", duration: "45 min", completed: false },
+        { id: 10, courseId: 3, title: "JavaScript Basics", duration: "50 min", completed: false },
+
+        { id: 11, courseId: 4, title: "Software Development Life Cycle", duration: "35 min", completed: false },
+        { id: 12, courseId: 4, title: "Agile and Scrum", duration: "40 min", completed: false }
+    ],
+
+    students: [
+        { id: 1, name: "Sokha Kim", email: "sokha@example.com", course: "Java Spring Boot", progress: 92, status: "Active" },
+        { id: 2, name: "Dara Rith", email: "dara@example.com", course: "PostgreSQL Fundamentals", progress: 76, status: "Active" },
+        { id: 3, name: "Srey Mom", email: "srey@example.com", course: "HTML, CSS & JavaScript", progress: 88, status: "Active" },
+        { id: 4, name: "Vannak Nhem", email: "vannak@example.com", course: "Java Spring Boot", progress: 61, status: "Active" },
+        { id: 5, name: "Pisey Chan", email: "pisey@example.com", course: "Software Engineering", progress: 73, status: "Active" }
+    ],
+
+    assignments: [
+        {
+            id: 1,
+            courseId: 1,
+            title: "Build Student REST API",
+            description: "Create CRUD API using Spring Boot.",
+            dueDate: "2026-10-05",
+            points: 100
+        },
+        {
+            id: 2,
+            courseId: 2,
+            title: "SQL JOIN Exercise",
+            description: "Write queries using INNER JOIN and LEFT JOIN.",
+            dueDate: "2026-10-03",
+            points: 50
+        },
+        {
+            id: 3,
+            courseId: 3,
+            title: "Responsive Web Page",
+            description: "Build a responsive student profile page.",
+            dueDate: "2026-10-08",
+            points: 100
+        }
+    ],
+
+    submissions: [
+        {
+            id: 1,
+            assignmentId: 1,
+            studentId: 1,
+            submittedAt: "2026-09-29",
+            score: null,
+            status: "Submitted"
+        },
+        {
+            id: 2,
+            assignmentId: 1,
+            studentId: 4,
+            submittedAt: "2026-09-28",
+            score: 88,
+            status: "Graded"
+        },
+        {
+            id: 3,
+            assignmentId: 2,
+            studentId: 2,
+            submittedAt: "2026-09-27",
+            score: 45,
+            status: "Graded"
+        }
+    ],
+
+    quizzes: [
+        {
+            id: 1,
+            courseId: 1,
+            title: "Spring Boot Basics Quiz",
+            questions: [
+                {
+                    id: 1,
+                    question: "Which annotation creates a REST controller?",
+                    options: ["@Service", "@RestController", "@Repository", "@Entity"],
+                    answer: 1
+                },
+                {
+                    id: 2,
+                    question: "Which file commonly contains Spring configuration?",
+                    options: ["index.html", "application.properties", "main.css", "package.json"],
+                    answer: 1
+                },
+                {
+                    id: 3,
+                    question: "Which dependency is commonly used for REST APIs?",
+                    options: ["Spring Web", "JDBC only", "Thymeleaf only", "Lombok only"],
+                    answer: 0
+                }
+            ]
+        },
+        {
+            id: 2,
+            courseId: 2,
+            title: "PostgreSQL Quiz",
+            questions: [
+                {
+                    id: 1,
+                    question: "Which command retrieves data?",
+                    options: ["SELECT", "INSERT", "DELETE", "DROP"],
+                    answer: 0
+                },
+                {
+                    id: 2,
+                    question: "Which keyword combines tables?",
+                    options: ["GROUP", "JOIN", "ORDER", "LIMIT"],
+                    answer: 1
+                }
+            ]
+        }
+    ],
+
+    quizResults: [
+        {
+            id: 1,
+            quizId: 1,
+            studentId: 1,
+            score: 67,
+            date: "2026-09-28"
+        }
+    ],
+
+    events: [
+        {
+            id: 1,
+            title: "Java Assignment",
+            date: "2026-10-05",
+            type: "Assignment"
+        },
+        {
+            id: 2,
+            title: "Spring Boot Quiz",
+            date: "2026-10-02",
+            type: "Quiz"
+        },
+        {
+            id: 3,
+            title: "PostgreSQL Lesson",
+            date: "2026-10-03",
+            type: "Lesson"
+        }
+    ],
+
+    messages: [
+        {
+            id: 1,
+            from: "teacher",
+            to: "student",
+            text: "Welcome to E-Teaching. Please check the new assignment.",
+            date: "2026-09-29 09:00"
+        },
+        {
+            id: 2,
+            from: "student",
+            to: "teacher",
+            text: "Thank you teacher. I will submit it today.",
+            date: "2026-09-29 10:15"
+        }
+    ],
+
+    notifications: [
+        {
+            id: 1,
+            role: "student",
+            title: "New Assignment",
+            text: "Build Student REST API has been created.",
+            read: false
+        },
+        {
+            id: 2,
+            role: "teacher",
+            title: "New Submission",
+            text: "Sokha Kim submitted an assignment.",
+            read: false
+        },
+        {
+            id: 3,
+            role: "student",
+            title: "Upcoming Quiz",
+            text: "Spring Boot Basics Quiz is coming soon.",
+            read: true
+        }
+    ],
+
+    certificates: [
+        {
+            id: 1,
+            studentId: 1,
+            courseId: 3,
+            title: "HTML, CSS & JavaScript",
+            date: "2026-09-20"
+        }
+    ],
+
+    settings: {
+        darkMode: false,
+        emailNotification: true,
+        assignmentNotification: true,
+        quizNotification: true
+    }
+};
+
+function getData() {
+    const saved = localStorage.getItem(STORAGE_KEY);
+
+    if (!saved) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_DATA));
+        return JSON.parse(JSON.stringify(DEFAULT_DATA));
+    }
+
+    try {
+        return JSON.parse(saved);
+    } catch {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_DATA));
+        return JSON.parse(JSON.stringify(DEFAULT_DATA));
+    }
+}
+
+let data = getData();
+
+function saveData() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+
+/* =========================================================
+   SESSION
+   ========================================================= */
+
+function loadSession() {
+    const session = localStorage.getItem(SESSION_KEY);
+
+    if (session) {
+        try {
+            const parsed = JSON.parse(session);
+            state.role = parsed.role;
+            state.user = parsed.user;
+        } catch {
+            localStorage.removeItem(SESSION_KEY);
+        }
+    }
+}
+
+function login(role, username, password) {
+
+    if (role === "teacher" && username === "teacher" && password === "123") {
+        state.role = "teacher";
+        state.user = "teacher";
+    }
+    else if (role === "student" && username === "student" && password === "123") {
+        state.role = "student";
+        state.user = "student";
+    }
+    else {
+        toast("Invalid username or password.", "error");
+        return;
+    }
+
+    localStorage.setItem(
+        SESSION_KEY,
+        JSON.stringify({
+            role: state.role,
+            user: state.user
+        })
+    );
+
+    state.page = "dashboard";
+
+    render();
+    toast(
+        state.role === "teacher"
+            ? "Welcome Teacher!"
+            : "Welcome Student!",
+        "success"
+    );
+}
+
+function logout() {
+    localStorage.removeItem(SESSION_KEY);
+
+    state.role = null;
+    state.user = null;
+    state.page = "dashboard";
+
+    render();
+}
+
+/* =========================================================
+   LOGIN PAGE
+   ========================================================= */
+
+function renderLogin() {
+    return `
+        <div class="login-page">
+            <div class="login-container">
+
+                <div class="login-logo">ET</div>
+
+                <div class="login-title">E-Teaching</div>
+
+                <div class="login-subtitle">
+                    Online Learning & Teaching Platform
+                </div>
+
+                <div class="login-card">
+
+                    <form onsubmit="handleLogin(event)">
+
+                        <div class="form-group">
+                            <label class="form-label">Login As</label>
+
+                            <select id="loginRole" class="select">
+                                <option value="teacher">Teacher</option>
+                                <option value="student">Student</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Username</label>
+                            <input
+                                id="loginUsername"
+                                class="input"
+                                placeholder="Enter username"
+                                autocomplete="username"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Password</label>
+                            <input
+                                id="loginPassword"
+                                class="input"
+                                type="password"
+                                placeholder="Enter password"
+                            >
+                        </div>
+
+                        <button class="btn btn-primary login-button">
+                            Sign In
+                        </button>
+
+                    </form>
+
+                    <div class="demo-accounts">
+
+                        <div
+                            class="demo-account"
+                            onclick="fillDemo('teacher')"
+                        >
+                            <div class="demo-account-title">
+                                👨‍🏫 Teacher Demo
+                            </div>
+                            <div class="demo-account-text">
+                                teacher / 123
+                            </div>
+                        </div>
+
+                        <div
+                            class="demo-account"
+                            onclick="fillDemo('student')"
+                        >
+                            <div class="demo-account-title">
+                                🎓 Student Demo
+                            </div>
+                            <div class="demo-account-text">
+                                student / 123
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div style="
+                    text-align:center;
+                    margin-top:18px;
+                    font-size:11px;
+                    color:var(--muted-foreground);
+                ">
+                    Frontend Demo • No API / Database connected
+                </div>
+
+            </div>
+        </div>
+    `;
+}
+
+function fillDemo(role) {
+    document.getElementById("loginRole").value = role;
+    document.getElementById("loginUsername").value = role;
+    document.getElementById("loginPassword").value = "123";
+}
+
+function handleLogin(event) {
+    event.preventDefault();
+
+    const role = document.getElementById("loginRole").value;
+    const username = document.getElementById("loginUsername").value.trim();
+    const password = document.getElementById("loginPassword").value;
+
+    login(role, username, password);
+}
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+
+const TEACHER_MENU = [
+    {
+        title: "Overview",
+        items: [
+            ["dashboard", "📊", "Dashboard"]
+        ]
+    },
+    {
+        title: "Teaching",
+        items: [
+            ["courses", "📚", "Courses"],
+            ["lessons", "📖", "Lessons"],
+            ["students", "👨‍🎓", "Students"],
+            ["assignments", "📝", "Assignments"],
+            ["submissions", "📥", "Submissions"],
+            ["quizzes", "❓", "Quizzes"]
+        ]
+    },
+    {
+        title: "Management",
+        items: [
+            ["calendar", "📅", "Calendar"],
+            ["messages", "💬", "Messages"],
+            ["notifications", "🔔", "Notifications"],
+            ["reports", "📈", "Reports"]
+        ]
+    },
+    {
+        title: "System",
+        items: [
+            ["profile", "👤", "Profile"],
+            ["settings", "⚙️", "Settings"]
+        ]
+    }
+];
+
+const STUDENT_MENU = [
+    {
+        title: "Overview",
+        items: [
+            ["dashboard", "📊", "Dashboard"],
+            ["courses", "📚", "My Courses"],
+            ["progress", "📈", "My Progress"]
+        ]
+    },
+    {
+        title: "Learning",
+        items: [
+            ["assignments", "📝", "Assignments"],
+            ["quizzes", "❓", "Quizzes"],
+            ["certificates", "🏆", "Certificates"],
+            ["calendar", "📅", "Calendar"]
+        ]
+    },
+    {
+        title: "Communication",
+        items: [
+            ["messages", "💬", "Messages"],
+            ["notifications", "🔔", "Notifications"]
+        ]
+    },
+    {
+        title: "Account",
+        items: [
+            ["profile", "👤", "Profile"],
+            ["settings", "⚙️", "Settings"]
+        ]
+    }
+];
+
+function navigate(page) {
+    state.page = page;
+    state.selectedCourseId = null;
+    state.selectedLessonId = null;
+    state.selectedAssignmentId = null;
+    state.selectedQuizId = null;
+    state.selectedStudentId = null;
+
+    render();
+
+    if (window.innerWidth < 1000) {
+        document.querySelector(".sidebar")?.classList.remove("open");
+    }
+}
+
+/* =========================================================
+   APP SHELL
+   ========================================================= */
+
+function renderApp() {
+
+    const menu = state.role === "teacher"
+        ? TEACHER_MENU
+        : STUDENT_MENU;
+
+    const unread = data.notifications.filter(
+        n => n.role === state.role && !n.read
+    ).length;
+
+    return `
+        <div class="app">
+
+            <aside class="sidebar">
+
+                <div class="sidebar-brand">
+                    <div class="brand-icon">ET</div>
+
+                    <div>
+                        <div class="brand-name">E-Teaching</div>
+                        <div class="sidebar-role">
+                            ${state.role === "teacher"
+                                ? "Teacher Portal"
+                                : "Student Portal"}
+                        </div>
+                    </div>
+                </div>
+
+                <nav class="sidebar-nav">
+
+                    ${menu.map(section => `
+                        <div class="nav-section">
+
+                            <div class="nav-section-title">
+                                ${section.title}
+                            </div>
+
+                            ${section.items.map(item => `
+                                <button
+                                    class="nav-item ${
+                                        state.page === item[0]
+                                            ? "active"
+                                            : ""
+                                    }"
+                                    onclick="navigate('${item[0]}')"
+                                >
+                                    <span class="nav-icon">${item[1]}</span>
+                                    <span>${item[2]}</span>
+
+                                    ${
+                                        item[0] === "notifications" && unread
+                                        ? `<span
+                                            class="badge badge-red"
+                                            style="margin-left:auto"
+                                          >${unread}</span>`
+                                        : ""
+                                    }
+                                </button>
+                            `).join("")}
+
+                        </div>
+                    `).join("")}
+
+                </nav>
+
+                <div class="sidebar-footer">
+
+                    <div class="user-mini">
+
+                        <div class="avatar">
+                            ${state.role === "teacher" ? "T" : "S"}
+                        </div>
+
+                        <div class="user-info">
+                            <div class="user-name">
+                                ${state.role === "teacher"
+                                    ? "Teacher"
+                                    : "Student"}
+                            </div>
+
+                            <div class="user-role">
+                                ${state.role}
+                            </div>
+                        </div>
+
+                        <button
+                            class="btn btn-icon btn-sm"
+                            onclick="logout()"
+                            title="Logout"
+                        >
+                            ↪
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </aside>
+
+            <main class="main">
+
+                <header class="topbar">
+
+                    <div class="flex items-center gap-12">
+
+                        <button
+                            class="btn btn-icon mobile-menu"
+                            onclick="toggleSidebar()"
+                        >
+                            ☰
+                        </button>
+
+                        <div>
+                            <div class="page-title">
+                                ${getPageTitle()}
+                            </div>
+
+                            <div class="breadcrumb">
+                                E-Teaching / ${getPageTitle()}
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="topbar-actions">
+
+                        <button
+                            class="btn btn-icon"
+                            onclick="toggleTheme()"
+                            title="Toggle theme"
+                        >
+                            ${data.settings.darkMode ? "☀️" : "🌙"}
+                        </button>
+
+                        <button
+                            class="btn btn-icon"
+                            onclick="navigate('notifications')"
+                            title="Notifications"
+                        >
+                            🔔
+                        </button>
+
+                        <button
+                            class="btn btn-icon"
+                            onclick="navigate('profile')"
+                            title="Profile"
+                        >
+                            👤
+                        </button>
+
+                    </div>
+
+                </header>
+
+                <section class="content">
+                    ${renderPage()}
+                </section>
+
+            </main>
+
+        </div>
+    `;
+}
+
+function getPageTitle() {
+
+    const all = [...TEACHER_MENU, ...STUDENT_MENU];
+
+    for (const section of all) {
+        const item = section.items.find(x => x[0] === state.page);
+
+        if (item) {
+            return item[2];
+        }
+    }
+
+    const names = {
+        "course-detail": "Course Details",
+        "lesson": "Lesson",
+        "student-detail": "Student Details",
+        "submit-assignment": "Submit Assignment",
+        "take-quiz": "Take Quiz",
+        "quiz-result": "Quiz Result"
+    };
+
+    return names[state.page] || "Dashboard";
+}
+
+function toggleSidebar() {
+    document.querySelector(".sidebar")?.classList.toggle("open");
+}
+
+/* =========================================================
+   PAGE ROUTER
+   ========================================================= */
+
+function renderPage() {
+
+    if (state.role === "teacher") {
+        switch (state.page) {
+            case "dashboard": return teacherDashboard();
+            case "courses": return teacherCourses();
+            case "course-detail": return courseDetail();
+            case "lessons": return teacherLessons();
+            case "students": return teacherStudents();
+            case "student-detail": return studentDetail();
+            case "assignments": return teacherAssignments();
+            case "submissions": return teacherSubmissions();
+            case "quizzes": return teacherQuizzes();
+            case "calendar": return calendarPage();
+            case "messages": return messagesPage();
+            case "notifications": return notificationsPage();
+            case "reports": return reportsPage();
+            case "profile": return profilePage();
+            case "settings": return settingsPage();
+            default: return teacherDashboard();
+        }
+    }
+
+    switch (state.page) {
+        case "dashboard": return studentDashboard();
+        case "courses": return studentCourses();
+        case "course-detail": return courseDetail();
+        case "lesson": return studentLesson();
+        case "assignments": return studentAssignments();
+        case "submit-assignment": return submitAssignmentPage();
+        case "quizzes": return studentQuizzes();
+        case "take-quiz": return takeQuizPage();
+        case "quiz-result": return quizResultPage();
+        case "calendar": return calendarPage();
+        case "progress": return studentProgress();
+        case "certificates": return certificatesPage();
+        case "messages": return messagesPage();
+        case "notifications": return notificationsPage();
+        case "profile": return profilePage();
+        case "settings": return settingsPage();
+        default: return studentDashboard();
+    }
+}
+
+/* =========================================================
+   TEACHER DASHBOARD
+   ========================================================= */
+
+function teacherDashboard() {
+
+    const totalStudents = data.students.length;
+    const totalCourses = data.courses.length;
+    const totalAssignments = data.assignments.length;
+
+    const avgProgress = Math.round(
+        data.students.reduce((sum, s) => sum + s.progress, 0)
+        / Math.max(data.students.length, 1)
+    );
+
+    const pending = data.submissions.filter(
+        s => s.status === "Submitted"
+    ).length;
+
+    return `
+        <div class="page-header">
+
+            <div>
+                <h1 class="page-heading">
+                    Good morning, Teacher 👋
+                </h1>
+
+                <div class="page-description">
+                    Here is what's happening with your classes today.
+                </div>
+            </div>
+
+            <div class="actions">
+                <button
+                    class="btn btn-primary"
+                    onclick="openCreateCourseModal()"
+                >
+                    + Create Course
+                </button>
+
+                <button
+                    class="btn"
+                    onclick="openCreateAssignmentModal()"
+                >
+                    + Assignment
+                </button>
+            </div>
+
+        </div>
+
+        <div class="grid grid-4 mb-20">
+
+            ${statCard("Total Courses", totalCourses, "📚", "Active courses")}
+            ${statCard("Total Students", totalStudents, "👨‍🎓", "Enrolled students")}
+            ${statCard("Assignments", totalAssignments, "📝", "Active assignments")}
+            ${statCard("Average Progress", avgProgress + "%", "📈", "Across students")}
+
+        </div>
+
+        <div class="grid grid-3">
+
+            <div class="card" style="grid-column:span 2">
+
+                <div class="card-header">
+
+                    <div>
+                        <div class="card-title">My Courses</div>
+                        <div class="card-description">
+                            Courses currently being taught
+                        </div>
+                    </div>
+
+                    <button
+                        class="btn btn-sm"
+                        onclick="navigate('courses')"
+                    >
+                        View All
+                    </button>
+
+                </div>
+
+                <div class="card-body">
+
+                    ${data.courses.slice(0, 4).map(courseCardSmall).join("")}
+
+                </div>
+
+            </div>
+
+            <div class="card">
+
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">Pending Work</div>
+                        <div class="card-description">
+                            Items requiring your attention
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="list-item">
+                        <div class="flex justify-between">
+                            <strong style="font-size:13px">
+                                Submissions
+                            </strong>
+                            <span class="badge badge-yellow">
+                                ${pending}
+                            </span>
+                        </div>
+
+                        <div class="text-muted" style="font-size:11px;margin-top:4px">
+                            Need grading
+                        </div>
+
+                        <button
+                            class="btn btn-sm mt-16"
+                            onclick="navigate('submissions')"
+                        >
+                            Review
+                        </button>
+                    </div>
+
+                    <div class="list-item">
+                        <div class="flex justify-between">
+                            <strong style="font-size:13px">
+                                Assignments
+                            </strong>
+                            <span class="badge badge-blue">
+                                ${totalAssignments}
+                            </span>
+                        </div>
+
+                        <div class="text-muted" style="font-size:11px;margin-top:4px">
+                            Currently active
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="grid grid-2 mt-16">
+
+            <div class="card">
+
+                <div class="card-header">
+                    <div class="card-title">
+                        Recent Student Activity
+                    </div>
+
+                    <button
+                        class="btn btn-sm"
+                        onclick="navigate('students')"
+                    >
+                        Students
+                    </button>
+                </div>
+
+                <div class="card-body">
+
+                    ${data.students.slice(0, 5).map(student => `
+                        <div class="list-item">
+
+                            <div class="flex items-center gap-12">
+
+                                <div class="avatar">
+                                    ${initials(student.name)}
+                                </div>
+
+                                <div style="flex:1">
+                                    <div style="font-size:13px;font-weight:700">
+                                        ${student.name}
+                                    </div>
+
+                                    <div class="text-muted" style="font-size:11px">
+                                        ${student.course}
+                                    </div>
+                                </div>
+
+                                <div style="width:90px">
+                                    <div class="progress">
+                                        <div
+                                            class="progress-bar"
+                                            style="width:${student.progress}%"
+                                        ></div>
+                                    </div>
+
+                                    <div
+                                        class="text-muted"
+                                        style="font-size:10px;margin-top:3px;text-align:right"
+                                    >
+                                        ${student.progress}%
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    `).join("")}
+
+                </div>
+
+            </div>
+
+            <div class="card">
+
+                <div class="card-header">
+                    <div class="card-title">
+                        Upcoming Events
+                    </div>
+
+                    <button
+                        class="btn btn-sm"
+                        onclick="navigate('calendar')"
+                    >
+                        Calendar
+                    </button>
+                </div>
+
+                <div class="card-body">
+
+                    ${data.events.slice(0, 5).map(event => `
+                        <div class="list-item">
+
+                            <div class="flex justify-between">
+
+                                <div>
+                                    <div style="font-size:13px;font-weight:700">
+                                        ${event.title}
+                                    </div>
+
+                                    <div class="text-muted" style="font-size:11px;margin-top:4px">
+                                        ${event.date}
+                                    </div>
+                                </div>
+
+                                <span class="badge ${
+                                    event.type === "Quiz"
+                                    ? "badge-purple"
+                                    : event.type === "Assignment"
+                                    ? "badge-blue"
+                                    : "badge-green"
+                                }">
+                                    ${event.type}
+                                </span>
+
+                            </div>
+
+                        </div>
+                    `).join("")}
+
+                </div>
+
+            </div>
+
+        </div>
+    `;
+}
+
+function statCard(label, value, icon, description) {
+    return `
+        <div class="card stat-card">
+
+            <div class="stat-top">
+                <div class="stat-label">${label}</div>
+                <div class="stat-icon">${icon}</div>
+            </div>
+
+            <div class="stat-value">${value}</div>
+
+            <div class="stat-change">
+                ${description}
+            </div>
+
+        </div>
+    `;
+}
+
+function courseCardSmall(course) {
+
+    return `
+        <div
+            class="list-item"
+            style="cursor:pointer"
+            onclick="openCourse(${course.id})"
+        >
+
+            <div class="flex items-center gap-12">
+
+                <div
+                    style="
+                        width:45px;
+                        height:45px;
+                        border-radius:9px;
+                        background:linear-gradient(135deg,#2563eb,#7c3aed);
+                        color:white;
+                        display:flex;
+                        align-items:center;
+                        justify-content:center;
+                        font-weight:800;
+                        font-size:12px;
+                    "
+                >
+                    ${course.code.substring(0,3)}
+                </div>
+
+                <div style="flex:1">
+
+                    <div style="font-weight:700;font-size:13px">
+                        ${course.title}
+                    </div>
+
+                    <div class="text-muted" style="font-size:11px">
+                        ${course.code} · ${course.students} students
+                    </div>
+
+                </div>
+
+                <span class="badge badge-blue">
+                    ${course.progress}%
+                </span>
+
+            </div>
+
+        </div>
+    `;
+}
+
+/* =========================================================
+   STUDENT DASHBOARD
+   ========================================================= */
+
+function studentDashboard() {
+
+    const completedLessons = data.lessons.filter(x => x.completed).length;
+
+    const totalLessons = data.lessons.length;
+
+    const myResults = data.quizResults.filter(
+        r => r.studentId === 1
+    );
+
+    const avgQuiz = myResults.length
+        ? Math.round(
+            myResults.reduce((a,b) => a + b.score, 0) / myResults.length
+          )
+        : 0;
+
+    return `
+        <div class="page-header">
+
+            <div>
+                <h1 class="page-heading">
+                    Welcome back, Student 👋
+                </h1>
+
+                <div class="page-description">
+                    Continue your learning journey.
+                </div>
+            </div>
+
+            <button
+                class="btn btn-primary"
+                onclick="navigate('courses')"
+            >
+                Browse Courses
+            </button>
+
+        </div>
+
+        <div class="grid grid-4 mb-20">
+
+            ${statCard("My Courses", 4, "📚", "Enrolled courses")}
+
+            ${statCard(
+                "Lessons Completed",
+                completedLessons,
+                "📖",
+                `${totalLessons} total lessons`
+            )}
+
+            ${statCard(
+                "Quiz Average",
+                avgQuiz + "%",
+                "❓",
+                "Your quiz performance"
+            )}
+
+            ${statCard(
+                "Certificates",
+                data.certificates.length,
+                "🏆",
+                "Certificates earned"
+            )}
+
+        </div>
+
+        <div class="grid grid-3">
+
+            <div
+                class="card"
+                style="grid-column:span 2"
+            >
+
+                <div class="card-header">
+
+                    <div>
+                        <div class="card-title">
+                            Continue Learning
+                        </div>
+
+                        <div class="card-description">
+                            Pick up where you left off
+                        </div>
+                    </div>
+
+                    <button
+                        class="btn btn-sm"
+                        onclick="navigate('courses')"
+                    >
+                        View Courses
+                    </button>
+
+                </div>
+
+                <div class="card-body">
+
+                    ${data.courses.map(course => `
+                        <div
+                            class="list-item"
+                            style="cursor:pointer"
+                            onclick="openCourse(${course.id})"
+                        >
+
+                            <div class="flex justify-between">
+
+                                <div>
+                                    <div style="font-weight:700;font-size:13px">
+                                        ${course.title}
+                                    </div>
+
+                                    <div class="text-muted" style="font-size:11px">
+                                        ${course.code}
+                                    </div>
+                                </div>
+
+                                <strong style="font-size:12px">
+                                    ${course.progress}%
+                                </strong>
+
+                            </div>
+
+                            <div class="progress mt-16">
+                                <div
+                                    class="progress-bar"
+                                    style="width:${course.progress}%"
+                                ></div>
+                            </div>
+
+                        </div>
+                    `).join("")}
+
+                </div>
+
+            </div>
+
+            <div class="card">
+
+                <div class="card-header">
+
+                    <div>
+                        <div class="card-title">
+                            Upcoming
+                        </div>
+
+                        <div class="card-description">
+                            Your next activities
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="card-body">
+
+                    ${data.events.slice(0,4).map(event => `
+                        <div class="list-item">
+
+                            <div style="font-size:13px;font-weight:700">
+                                ${event.title}
+                            </div>
+
+                            <div class="text-muted" style="font-size:11px;margin-top:4px">
+                                ${event.date}
+                            </div>
+
+                            <span class="badge badge-blue" style="margin-top:7px">
+                                ${event.type}
+                            </span>
+
+                        </div>
+                    `).join("")}
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="card mt-16">
+
+            <div class="card-header">
+
+                <div>
+                    <div class="card-title">
+                        Quick Actions
+                    </div>
+
+                    <div class="card-description">
+                        Quickly access your learning tools
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="grid grid-4">
+
+                    <button
+                        class="btn"
+                        onclick="navigate('assignments')"
+                    >
+                        📝 Assignments
+                    </button>
+
+                    <button
+                        class="btn"
+                        onclick="navigate('quizzes')"
+                    >
+                        ❓ Take Quiz
+                    </button>
+
+                    <button
+                        class="btn"
+                        onclick="navigate('progress')"
+                    >
+                        📈 My Progress
+                    </button>
+
+                    <button
+                        class="btn"
+                        onclick="navigate('certificates')"
+                    >
+                        🏆 Certificates
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+    `;
+}
+
+/* =========================================================
+   COURSES
+   ========================================================= */
+
+function teacherCourses() {
+
+    return `
+        <div class="page-header">
+
+            <div>
+                <h1 class="page-heading">Courses</h1>
+                <div class="page-description">
+                    Create and manage your courses.
+                </div>
+            </div>
+
+            <button
+                class="btn btn-primary"
+                onclick="openCreateCourseModal()"
+            >
+                + Create Course
+            </button>
+
+        </div>
+
+        <div class="grid grid-3">
+
+            ${data.courses.map(course => courseCard(course)).join("")}
+
+        </div>
+    `;
+}
+
+function studentCourses() {
+
+    return `
+        <div class="page-header">
+
+            <div>
+                <h1 class="page-heading">My Courses</h1>
+                <div class="page-description">
+                    Courses available for your learning.
+                </div>
+            </div>
+
+        </div>
+
+        <div class="grid grid-3">
+
+            ${data.courses.map(course => courseCard(course, true)).join("")}
+
+        </div>
+    `;
+}
+
+function courseCard(course, student = false) {
+
+    return `
+        <div
+            class="card course-card"
+            onclick="openCourse(${course.id})"
+        >
+
+            <div class="course-cover ${course.color || ""}">
+
+                <div class="course-code">
+                    ${course.code}
+                </div>
+
+                <div class="course-cover-title">
+                    ${course.title}
+                </div>
+
+            </div>
+
+            <div class="course-body">
+
+                <div class="course-description">
+                    ${course.description}
+                </div>
+
+                <div class="course-footer">
+
+                    <div class="text-muted" style="font-size:11px">
+                        👥 ${course.students} students
+                    </div>
+
+                    <span class="badge badge-blue">
+                        ${course.category}
+                    </span>
+
+                </div>
+
+                <div style="margin-top:14px">
+
+                    <div class="progress">
+                        <div
+                            class="progress-bar"
+                            style="width:${course.progress}%"
+                        ></div>
+                    </div>
+
+                    <div
+                        class="text-muted"
+                        style="font-size:10px;margin-top:4px"
+                    >
+                        ${course.progress}% progress
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    `;
+}
+
+function openCourse(id) {
+
+    state.selectedCourseId = id;
+    state.page = "course-detail";
+
+    render();
+}
+
+/* =========================================================
+   COURSE DETAIL
+   ========================================================= */
+
+function courseDetail() {
+
+    const course = data.courses.find(
+        c => c.id === state.selectedCourseId
+    );
+
+    if (!course) {
+        return `
+            <div class="empty">
+                <div class="empty-icon">📚</div>
+                Course not found.
+            </div>
+        `;
+    }
+
+    const lessons = data.lessons.filter(
+        l => l.courseId === course.id
+    );
+
+    const assignments = data.assignments.filter(
+        a => a.courseId === course.id
+    );
+
+    const quizzes = data.quizzes.filter(
+        q => q.courseId === course.id
+    );
+
+    return `
+        <div class="page-header">
+
+            <div>
+                <button
+                    class="btn btn-sm"
+                    onclick="navigate('courses')"
+                >
+                    ← Back
+                </button>
+            </div>
+
+            ${
+                state.role === "teacher"
+                ? `
+                    <div class="actions">
+                        <button
+                            class="btn"
+                            onclick="openEditCourseModal(${course.id})"
+                        >
+                            ✏️ Edit
+                        </button>
+
+                        <button
+                            class="btn btn-danger"
+                            onclick="deleteCourse(${course.id})"
+                        >
+                            Delete
+                        </button>
+                    </div>
+                `
+                : ""
+            }
+
+        </div>
+
+        <div class="detail-hero">
+
+            <div style="font-size:11px;opacity:.8">
+                ${course.code} · ${course.category}
+            </div>
+
+            <h1>${course.title}</h1>
+
+            <p>${course.description}</p>
+
+        </div>
+
+        <div class="grid grid-3 mb-20">
+
+            ${statCard("Lessons", lessons.length, "📖", "Course lessons")}
+            ${statCard("Assignments", assignments.length, "📝", "Course assignments")}
+            ${statCard("Quizzes", quizzes.length, "❓", "Course quizzes")}
+
+        </div>
+
+        <div class="grid grid-2">
+
+            <div class="card">
+
+                <div class="card-header">
+
+                    <div>
+                        <div class="card-title">
+                            Course Lessons
+                        </div>
+
+                        <div class="card-description">
+                            ${lessons.length} lessons
+                        </div>
+                    </div>
+
+                    ${
+                        state.role === "teacher"
+                        ? `
+                            <button
+                                class="btn btn-sm btn-primary"
+                                onclick="openCreateLessonModal(${course.id})"
+                            >
+                                + Lesson
+                            </button>
+                        `
+                        : ""
+                    }
+
+                </div>
+
+                <div class="card-body">
+
+                    ${
+                        lessons.length
+                        ? lessons.map((lesson,index) => `
+                            <div
+                                class="lesson-item ${
+                                    lesson.completed ? "completed" : ""
+                                }"
+                                onclick="openLesson(${lesson.id})"
+                            >
+
+                                <div class="lesson-number">
+                                    ${
+                                        lesson.completed
+                                        ? "✓"
+                                        : index + 1
+                                    }
+                                </div>
+
+                                <div style="flex:1">
+
+                                    <div style="font-size:13px;font-weight:700">
+                                        ${lesson.title}
+                                    </div>
+
+                                    <div class="text-muted" style="font-size:11px;margin-top:3px">
+                                        ${lesson.duration}
+                                    </div>
+
+                                </div>
+
+                                <span class="badge ${
+                                    lesson.completed
+                                    ? "badge-green"
+                                    : "badge-blue"
+                                }">
+                                    ${
+                                        lesson.completed
+                                        ? "Completed"
+                                        : "Open"
+                                    }
+                                </span>
+
+                            </div>
+                        `).join("")
+                        : `
+                            <div class="empty">
+                                No lessons yet.
+                            </div>
+                        `
+                    }
+
+                </div>
+
+            </div>
+
+            <div>
+
+                <div class="card mb-16">
+
+                    <div class="card-header">
+                        <div class="card-title">
+                            Assignments
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+
+                        ${
+                            assignments.length
+                            ? assignments.map(a => `
+                                <div class="list-item">
+
+                                    <div class="flex justify-between">
+
+                                        <div>
+                                            <div style="font-size:13px;font-weight:700">
+                                                ${a.title}
+                                            </div>
+
+                                            <div class="text-muted" style="font-size:11px;margin-top:4px">
+                                                Due ${a.dueDate}
+                                            </div>
+                                        </div>
+
+                                        ${
+                                            state.role === "student"
+                                            ? `
+                                                <button
+                                                    class="btn btn-sm btn-primary"
+                                                    onclick="openAssignment(${a.id})"
+                                                >
+                                                    Open
+                                                </button>
+                                            `
+                                            : ""
+                                        }
+
+                                    </div>
+
+                                </div>
+                            `).join("")
+                            : `<div class="empty">No assignments.</div>`
+                        }
+
+                    </div>
+
+                </div>
+
+                <div class="card">
+
+                    <div class="card-header">
+                        <div class="card-title">
+                            Quizzes
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+
+                        ${
+                            quizzes.length
+                            ? quizzes.map(q => `
+                                <div class="list-item">
+
+                                    <div class="flex justify-between">
+
+                                        <div>
+                                            <div style="font-size:13px;font-weight:700">
+                                                ${q.title}
+                                            </div>
+
+                                            <div class="text-muted" style="font-size:11px;margin-top:4px">
+                                                ${q.questions.length} questions
+                                            </div>
+                                        </div>
+
+                                        ${
+                                            state.role === "student"
+                                            ? `
+                                                <button
+                                                    class="btn btn-sm btn-primary"
+                                                    onclick="openQuiz(${q.id})"
+                                                >
+                                                    Start
+                                                </button>
+                                            `
+                                            : ""
+                                        }
+
+                                    </div>
+
+                                </div>
+                            `).join("")
+                            : `<div class="empty">No quizzes.</div>`
+                        }
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    `;
+}
+
+/* =========================================================
+   LESSONS
+   ========================================================= */
+
+function teacherLessons() {
+
+    return `
+        <div class="page-header">
+
+            <div>
+                <h1 class="page-heading">Lessons</h1>
+                <div class="page-description">
+                    Manage lessons across all courses.
+                </div>
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <div class="card-body">
+
+                ${data.courses.map(course => {
+
+                    const lessons = data.lessons.filter(
+                        l => l.courseId === course.id
+                    );
+
+                    return `
+                        <div class="list-item">
+
+                            <div class="flex justify-between">
+
+                                <div>
+
+                                    <div style="font-weight:700;font-size:14px">
+                                        ${course.title}
+                                    </div>
+
+                                    <div class="text-muted" style="font-size:11px;margin-top:3px">
+                                        ${lessons.length} lessons
+                                    </div>
+
+                                </div>
+
+                                <button
+                                    class="btn btn-sm"
+                                    onclick="openCourse(${course.id})"
+                                >
+                                    Manage
+                                </button>
+
+                            </div>
+
+                        </div>
+                    `;
+
+                }).join("")}
+
+            </div>
+
+        </div>
+    `;
+}
+
+function openLesson(id) {
+
+    state.selectedLessonId = id;
+    state.page = "lesson";
+
+    render();
+}
+
+function studentLesson() {
+
+    const lesson = data.lessons.find(
+        l => l.id === state.selectedLessonId
+    );
+
+    if (!lesson) {
+        return `<div class="empty">Lesson not found.</div>`;
+    }
+
+    const course = data.courses.find(
+        c => c.id === lesson.courseId
+    );
+
+    return `
+        <div class="page-header">
+
+            <div>
+                <button
+                    class="btn btn-sm"
+                    onclick="openCourse(${course.id})"
+                >
+                    ← Back to Course
+                </button>
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <div>
+                    <div class="card-title">
+                        ${lesson.title}
+                    </div>
+
+                    <div class="card-description">
+                        ${course.title} · ${lesson.duration}
+                    </div>
+                </div>
+
+                ${
+                    lesson.completed
+                    ? `<span class="badge badge-green">Completed</span>`
+                    : ""
+                }
+
+            </div>
+
+            <div class="card-body">
+
+                <div style="
+                    height:280px;
+                    border-radius:10px;
+                    background:var(--muted);
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    font-size:50px;
+                    margin-bottom:20px;
+                ">
+                    ▶️
+                </div>
+
+                <h3>
+                    ${lesson.title}
+                </h3>
+
+                <p class="text-muted" style="line-height:1.7">
+                    This is a demo lesson area. Later this section can
+                    connect to your backend and support video,
+                    PDF materials, text content, and learning resources.
+                </p>
+
+                ${
+                    !lesson.completed
+                    ? `
+                        <button
+                            class="btn btn-success"
+                            onclick="completeLesson(${lesson.id})"
+                        >
+                            ✓ Mark Lesson Completed
+                        </button>
+                    `
+                    : `
+                        <button
+                            class="btn"
+                            onclick="openNextLesson(${lesson.id})"
+                        >
+                            Next Lesson →
+                        </button>
+                    `
+                }
+
+            </div>
+
+        </div>
+    `;
+}
+
+function completeLesson(id) {
+
+    const lesson = data.lessons.find(l => l.id === id);
+
+    if (lesson) {
+        lesson.completed = true;
+        saveData();
+        render();
+        toast("Lesson marked as completed.", "success");
+    }
+}
+
+function openNextLesson(id) {
+
+    const current = data.lessons.find(l => l.id === id);
+
+    const lessons = data.lessons.filter(
+        l => l.courseId === current.courseId
+    );
+
+    const index = lessons.findIndex(l => l.id === id);
+
+    if (index < lessons.length - 1) {
+        openLesson(lessons[index + 1].id);
+    } else {
+        toast("You completed all lessons in this course!", "success");
+    }
+}
+
+/* =========================================================
+   STUDENTS
+   ========================================================= */
+
+function teacherStudents() {
+
+    return `
+        <div class="page-header">
+
+            <div>
+                <h1 class="page-heading">Students</h1>
+                <div class="page-description">
+                    View and manage your students.
+                </div>
+            </div>
+
+            <button
+                class="btn"
+                onclick="toast('Student invitation demo opened.')"
+            >
+                + Invite Student
+            </button>
+
+        </div>
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <div class="card-title">
+                    Student List
+                </div>
+
+                <input
+                    id="studentSearch"
+                    class="input"
+                    style="max-width:220px"
+                    placeholder="Search students..."
+                    oninput="filterStudents()"
+                >
+
+            </div>
+
+            <div class="table-wrapper">
+
+                <table class="table">
+
+                    <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>Email</th>
+                            <th>Course</th>
+                            <th>Progress</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="studentsTable">
+
+                        ${data.students.map(student => studentRow(student)).join("")}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+    `;
+}
+
+function studentRow(student) {
+
+    return `
+        <tr>
+
+            <td>
+                <div class="flex items-center gap-8">
+                    <div class="avatar">
+                        ${initials(student.name)}
+                    </div>
+
+                    <strong>${student.name}</strong>
+                </div>
+            </td>
+
+            <td>${student.email}</td>
+
+            <td>${student.course}</td>
+
+            <td style="min-width:120px">
+
+                <div class="progress">
+                    <div
+                        class="progress-bar"
+                        style="width:${student.progress}%"
+                    ></div>
+                </div>
+
+                <div
+                    style="
+                        font-size:10px;
+                        color:var(--muted-foreground);
+                        margin-top:3px
+                    "
+                >
+                    ${student.progress}%
+                </div>
+
+            </td>
+
+            <td>
+                <span class="badge badge-green">
+                    ${student.status}
+                </span>
+            </td>
+
+            <td>
+                <button
+                    class="btn btn-sm"
+                    onclick="openStudent(${student.id})"
+                >
+                    View
+                </button>
+            </td>
+
+        </tr>
+    `;
+}
+
+function filterStudents() {
+
+    const value = document
+        .getElementById("studentSearch")
+        .value
+        .toLowerCase();
+
+    const filtered = data.students.filter(s =>
+        s.name.toLowerCase().includes(value) ||
+        s.email.toLowerCase().includes(value) ||
+        s.course.toLowerCase().includes(value)
+    );
+
+    document.getElementById("studentsTable").innerHTML =
+        filtered.map(studentRow).join("");
+}
+
+function openStudent(id) {
+
+    state.selectedStudentId = id;
+    state.page = "student-detail";
+
+    render();
+}
+
+function studentDetail() {
+
+    const student = data.students.find(
+        s => s.id === state.selectedStudentId
+    );
+
+    if (!student) {
+        return `<div class="empty">Student not found.</div>`;
+    }
+
+    const submissions = data.submissions.filter(
+        s => s.studentId === student.id
+    );
+
+    const results = data.quizResults.filter(
+        r => r.studentId === student.id
+    );
+
+    return `
+        <div class="page-header">
+
+            <button
+                class="btn btn-sm"
+                onclick="navigate('students')"
+            >
+                ← Back
+            </button>
+
+        </div>
+
+        <div class="grid grid-3">
+
+            <div class="card">
+
+                <div class="card-body" style="text-align:center">
+
+                    <div
+                        class="avatar"
+                        style="
+                            width:70px;
+                            height:70px;
+                            font-size:20px;
+                            margin:auto;
+                        "
+                    >
+                        ${initials(student.name)}
+                    </div>
+
+                    <h2 style="font-size:18px;margin:12px 0 5px">
+                        ${student.name}
+                    </h2>
+
+                    <div class="text-muted" style="font-size:12px">
+                        ${student.email}
+                    </div>
+
+                    <span
+                        class="badge badge-green"
+                        style="margin-top:12px"
+                    >
+                        ${student.status}
+                    </span>
+
+                </div>
+
+            </div>
+
+            <div class="card">
+
+                <div class="card-body">
+
+                    <div class="stat-label">
+                        COURSE PROGRESS
+                    </div>
+
+                    <div class="stat-value">
+                        ${student.progress}%
+                    </div>
+
+                    <div class="progress">
+                        <div
+                            class="progress-bar"
+                            style="width:${student.progress}%"
+                        ></div>
+                    </div>
+
+                    <div class="text-muted" style="font-size:11px;margin-top:8px">
+                        ${student.course}
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="card">
+
+                <div class="card-body">
+
+                    <div class="stat-label">
+                        QUIZ RESULTS
+                    </div>
+
+                    <div class="stat-value">
+                        ${results.length}
+                    </div>
+
+                    <div class="text-muted" style="font-size:11px">
+                        Quizzes completed
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="card mt-16">
+
+            <div class="card-header">
+                <div class="card-title">
+                    Assignment Submissions
+                </div>
+            </div>
+
+            <div class="table-wrapper">
+
+                <table class="table">
+
+                    <thead>
+                        <tr>
+                            <th>Assignment</th>
+                            <th>Submitted</th>
+                            <th>Status</th>
+                            <th>Score</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        ${
+                            submissions.length
+                            ? submissions.map(s => {
+
+                                const a = data.assignments.find(
+                                    x => x.id === s.assignmentId
+                                );
+
+                                return `
+                                    <tr>
+
+                                        <td>${a?.title || "-"}</td>
+
+                                        <td>${s.submittedAt}</td>
+
+                                        <td>
+                                            <span class="badge ${
+                                                s.status === "Graded"
+                                                ? "badge-green"
+                                                : "badge-yellow"
+                                            }">
+                                                ${s.status}
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            ${
+                                                s.score == null
+                                                ? "-"
+                                                : `${s.score}/${a.points}`
+                                            }
+                                        </td>
+
+                                    </tr>
+                                `;
+
+                            }).join("")
+                            : `
+                                <tr>
+                                    <td colspan="4">
+                                        No submissions.
+                                    </td>
+                                </tr>
+                            `
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+    `;
+}
+
+/* =========================================================
+   ASSIGNMENTS - TEACHER
+   ========================================================= */
+
+function teacherAssignments() {
+
+    return `
+        <div class="page-header">
+
+            <div>
+                <h1 class="page-heading">Assignments</h1>
+                <div class="page-description">
+                    Create and manage assignments.
+                </div>
+            </div>
+
+            <button
+                class="btn btn-primary"
+                onclick="openCreateAssignmentModal()"
+            >
+                + Create Assignment
+            </button>
+
+        </div>
+
+        <div class="grid grid-2">
+
+            ${data.assignments.map(a => {
+
+                const course = data.courses.find(
+                    c => c.id === a.courseId
+                );
+
+                const submissions = data.submissions.filter(
+                    s => s.assignmentId === a.id
+                );
+
+                return `
+                    <div class="card">
+
+                        <div class="card-header">
+
+                            <div>
+                                <div class="card-title">
+                                    ${a.title}
+                                </div>
+
+                                <div class="card-description">
+                                    ${course?.title || "-"}
+                                </div>
+                            </div>
+
+                            <span class="badge badge-blue">
+                                ${a.points} points
+                            </span>
+
+                        </div>
+
+                        <div class="card-body">
+
+                            <p class="text-muted" style="font-size:12px">
+                                ${a.description}
+                            </p>
+
+                            <div class="flex justify-between mt-16">
+
+                                <span class="text-muted" style="font-size:11px">
+                                    Due ${a.dueDate}
+                                </span>
+
+                                <span class="badge ${
+                                    submissions.length
+                                    ? "badge-green"
+                                    : "badge-yellow"
+                                }">
+                                    ${submissions.length} submissions
+                                </span>
+
+                            </div>
+
+                            <div class="actions mt-16">
+
+                                <button
+                                    class="btn btn-sm"
+                                    onclick="viewAssignmentSubmissions(${a.id})"
+                                >
+                                    View Submissions
+                                </button>
+
+                                <button
+                                    class="btn btn-sm"
+                                    onclick="openEditAssignmentModal(${a.id})"
+                                >
+                                    Edit
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                `;
+
+            }).join("")}
+
+        </div>
+    `;
+}
+
+function teacherSubmissions() {
+
+    return `
+        <div class="page-header">
+
+            <div>
+                <h1 class="page-heading">Submissions</h1>
+                <div class="page-description">
+                    Review and grade student work.
+                </div>
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <div class="table-wrapper">
+
+                <table class="table">
+
+                    <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>Assignment</th>
+                            <th>Submitted</th>
+                            <th>Status</th>
+                            <th>Score</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        ${
+                            data.submissions.map(s => {
+
+                                const student = data.students.find(
+                                    x => x.id === s.studentId
+                                );
+
+                                const assignment = data.assignments.find(
+                                    x => x.id === s.assignmentId
+                                );
+
+                                return `
+                                    <tr>
+
+                                        <td>
+                                            <strong>
+                                                ${student?.name || "-"}
+                                            </strong>
+                                        </td>
+
+                                        <td>
+                                            ${assignment?.title || "-"}
+                                        </td>
+
+                                        <td>${s.submittedAt}</td>
+
+                                        <td>
+                                            <span class="badge ${
+                                                s.status === "Graded"
+                                                ? "badge-green"
+                                                : "badge-yellow"
+                                            }">
+                                                ${s.status}
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            ${
+                                                s.score == null
+                                                ? "-"
+                                                : `${s.score}/${assignment?.points || 100}`
+                                            }
+                                        </td>
+
+                                        <td>
+
+                                            ${
+                                                s.status === "Submitted"
+                                                ? `
+                                                    <button
+                                                        class="btn btn-sm btn-primary"
+                                                        onclick="openGradeModal(${s.id})"
+                                                    >
+                                                        Grade
+                                                    </button>
+                                                `
+                                                : `
+                                                    <button
+                                                        class="btn btn-sm"
+                                                        onclick="openGradeModal(${s.id})"
+                                                    >
+                                                        Edit Grade
+                                                    </button>
+                                                `
+                                            }
+
+                                        </td>
+
+                                    </tr>
+                                `;
+
+                            }).join("")
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+    `;
+}
+
+function viewAssignmentSubmissions(id) {
+
+    const submissions = data.submissions.filter(
+        s => s.assignmentId === id
+    );
+
+    const assignment = data.assignments.find(
+        a => a.id === id
+    );
+
+    openModal(
+        "Assignment Submissions",
+        `
+            <div style="margin-bottom:15px">
+                <strong>${assignment.title}</strong>
+            </div>
+
+            ${
+                submissions.length
+                ? submissions.map(s => {
+
+                    const student = data.students.find(
+                        x => x.id === s.studentId
+                    );
+
+                    return `
+                        <div class="list-item">
+
+                            <div class="flex justify-between">
+
+                                <div>
+                                    <strong style="font-size:13px">
+                                        ${student?.name}
+                                    </strong>
+
+                                    <div
+                                        class="text-muted"
+                                        style="font-size:11px;margin-top:3px"
+                                    >
+                                        ${s.submittedAt}
+                                    </div>
+                                </div>
+
+                                <button
+                                    class="btn btn-sm"
+                                    onclick="closeModal();openGradeModal(${s.id})"
+                                >
+                                    ${
+                                        s.score == null
+                                        ? "Grade"
+                                        : "Edit"
+                                    }
+                                </button>
+
+                            </div>
+
+                        </div>
+                    `;
+
+                }).join("")
+                : `
+                    <div class="empty">
+                        No submissions yet.
+                    </div>
+                `
+            }
+        `,
+        `<button class="btn" onclick="closeModal()">Close</button>`
+    );
+}
+
+/* =========================================================
+   ASSIGNMENTS - STUDENT
+   ========================================================= */
+
+function studentAssignments() {
+
+    return `
+        <div class="page-header">
+
+            <div>
+                <h1 class="page-heading">Assignments</h1>
+                <div class="page-description">
+                    Complete and submit your assignments.
+                </div>
+            </div>
+
+        </div>
+
+        <div class="grid grid-2">
+
+            ${data.assignments.map(a => {
+
+                const course = data.courses.find(
+                    c => c.id === a.courseId
+                );
+
+                const submission = data.submissions.find(
+                    s =>
+                        s.assignmentId === a.id &&
+                        s.studentId === 1
+                );
+
+                return `
+                    <div class="card">
+
+                        <div class="card-header">
+
+                            <div>
+                                <div class="card-title">
+                                    ${a.title}
+                                </div>
+
+                                <div class="card-description">
+                                    ${course?.title || ""}
+                                </div>
+                            </div>
+
+                            <span class="badge badge-blue">
+                                ${a.points} pts
+                            </span>
+
+                        </div>
+
+                        <div class="card-body">
+
+                            <div
+                                class="text-muted"
+                                style="
+                                    font-size:12px;
+                                    line-height:1.6;
+                                "
+                            >
+                                ${a.description}
+                            </div>
+
+                            <div class="flex justify-between mt-16">
+
+                                <span
+                                    class="text-muted"
+                                    style="font-size:11px"
+                                >
+                                    Due ${a.dueDate}
+                                </span>
+
+                                ${
+                                    submission
+                                    ? `
+                                        <span class="badge ${
+                                            submission.status === "Graded"
+                                            ? "badge-green"
+                                            : "badge-yellow"
+                                        }">
+                                            ${submission.status}
+                                        </span>
+                                    `
+                                    : `
+                                        <span class="badge badge-red">
+                                            Not Submitted
+                                        </span>
+                                    `
+                                }
+
+                            </div>
+
+                            <button
+                                class="btn btn-primary btn-block mt-16"
+                                onclick="openAssignment(${a.id})"
+                            >
+                                ${
+                                    submission
+                                    ? "View Submission"
+                                    : "Open Assignment"
+                                }
+                            </button>
+
+                        </div>
+
+                    </div>
+                `;
+
+            }).join("")}
+
+        </div>
+    `;
+}
+
+function openAssignment(id) {
+
+    state.selectedAssignmentId = id;
+
+    if (state.role === "student") {
+        state.page = "submit-assignment";
+        render();
+    }
+}
+
+function submitAssignmentPage() {
+
+    const assignment = data.assignments.find(
+        a => a.id === state.selectedAssignmentId
+    );
+
+    if (!assignment) {
+        return `<div class="empty">Assignment not found.</div>`;
+    }
+
+    const course = data.courses.find(
+        c => c.id === assignment.courseId
+    );
+
+    const submission = data.submissions.find(
+        s =>
+            s.assignmentId === assignment.id &&
+            s.studentId === 1
+    );
+
+    return `
+        <div class="page-header">
+
+            <button
+                class="btn btn-sm"
+                onclick="navigate('assignments')"
+            >
+                ← Back
+            </button>
+
+        </div>
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <div>
+                    <div class="card-title">
+                        ${assignment.title}
+                    </div>
+
+                    <div class="card-description">
+                        ${course?.title || ""}
+                    </div>
+                </div>
+
+                <span class="badge badge-blue">
+                    ${assignment.points} points
+                </span>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="mb-20">
+
+                    <strong>Description</strong>
+
+                    <p class="text-muted" style="font-size:13px;line-height:1.7">
+                        ${assignment.description}
+                    </p>
+
+                </div>
+
+                <div class="grid grid-2 mb-20">
+
+                    <div>
+                        <div class="text-muted" style="font-size:11px">
+                            Due Date
+                        </div>
+
+                        <strong>${assignment.dueDate}</strong>
+                    </div>
+
+                    <div>
+                        <div class="text-muted" style="font-size:11px">
+                            Points
+                        </div>
+
+                        <strong>${assignment.points}</strong>
+                    </div>
+
+                </div>
+
+                ${
+                    submission
+                    ? `
+                        <div
+                            style="
+                                padding:15px;
+                                border-radius:8px;
+                                background:var(--muted);
+                            "
+                        >
+
+                            <div class="flex justify-between">
+
+                                <div>
+                                    <strong>
+                                        Your submission
+                                    </strong>
+
+                                    <div
+                                        class="text-muted"
+                                        style="font-size:11px;margin-top:4px"
+                                    >
+                                        Submitted ${submission.submittedAt}
+                                    </div>
+                                </div>
+
+                                <span class="badge ${
+                                    submission.status === "Graded"
+                                    ? "badge-green"
+                                    : "badge-yellow"
+                                }">
+                                    ${submission.status}
+                                </span>
+
+                            </div>
+
+                            ${
+                                submission.score != null
+                                ? `
+                                    <div style="margin-top:14px">
+                                        Score:
+                                        <strong>
+                                            ${submission.score}/${assignment.points}
+                                        </strong>
+                                    </div>
+                                `
+                                : ""
+                            }
+
+                        </div>
+                    `
+                    : `
+                        <div class="form-group">
+
+                            <label class="form-label">
+                                Your Answer / Submission
+                            </label>
+
+                            <textarea
+                                id="submissionText"
+                                class="textarea"
+                                placeholder="Write your answer here..."
+                            ></textarea>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label class="form-label">
+                                Attach File
+                            </label>
+
+                            <input
+                                type="file"
+                                class="input"
+                            >
+
+                        </div>
+
+                        <button
+                            class="btn btn-primary"
+                            onclick="submitAssignment()"
+                        >
+                            📤 Submit Assignment
+                        </button>
+                    `
+                }
+
+            </div>
+
+        </div>
+    `;
+}
+
+function submitAssignment() {
+
+    const text = document
+        .getElementById("submissionText")
+        .value
+        .trim();
+
+    if (!text) {
+        toast("Please write your answer first.", "error");
+        return;
+    }
+
+    data.submissions.push({
+        id: Date.now(),
+        assignmentId: state.selectedAssignmentId,
+        studentId: 1,
+        submittedAt: new Date().toISOString().slice(0,10),
+        score: null,
+        status: "Submitted"
+    });
+
+    data.notifications.unshift({
+        id: Date.now() + 1,
+        role: "teacher",
+        title: "New Submission",
+        text: "Student submitted an assignment.",
+        read: false
+    });
+
+    saveData();
+
+    render();
+
+    toast("Assignment submitted successfully.", "success");
+}
+
+/* =========================================================
+   QUIZZES
+   ========================================================= */
+
+function teacherQuizzes() {
+
+    return `
+        <div class="page-header">
+
+            <div>
+                <h1 class="page-heading">Quizzes</h1>
+                <div class="page-description">
+                    Create and manage quizzes.
+                </div>
+            </div>
+
+            <button
+                class="btn btn-primary"
+                onclick="openCreateQuizModal()"
+            >
+                + Create Quiz
+            </button>
+
+        </div>
+
+        <div class="grid grid-2">
+
+            ${data.quizzes.map(q => {
+
+                const course = data.courses.find(
+                    c => c.id === q.courseId
+                );
+
+                return `
+                    <div class="card">
+
+                        <div class="card-header">
+
+                            <div>
+                                <div class="card-title">
+                                    ${q.title}
+                                </div>
+
+                                <div class="card-description">
+                                    ${course?.title || ""}
+                                </div>
+                            </div>
+
+                            <span class="badge badge-purple">
+                                Quiz
+                            </span>
+
+                        </div>
+
+                        <div class="card-body">
+
+                            <div class="text-muted" style="font-size:12px">
+                                ${q.questions.length} questions
+                            </div>
+
+                            <div class="actions mt-16">
+
+                                <button
+                                    class="btn btn-sm"
+                                    onclick="openQuizBuilder(${q.id})"
+                                >
+                                    ✏️ Edit Questions
+                                </button>
+
+                                <button
+                                    class="btn btn-sm"
+                                    onclick="toast('Quiz preview opened.')"
+                                >
+                                    Preview
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                `;
+
+            }).join("")}
+
+        </div>
+    `;
+}
+
+function studentQuizzes() {
+
+    return `
+        <div class="page-header">
+
+            <div>
+                <h1 class="page-heading">Quizzes</h1>
+                <div class="page-description">
+                    Test your knowledge.
+                </div>
+            </div>
+
+        </div>
+
+        <div class="grid grid-2">
+
+            ${data.quizzes.map(q => {
+
+                const course = data.courses.find(
+                    c => c.id === q.courseId
+                );
+
+                const result = data.quizResults.find(
+                    r =>
+                        r.quizId === q.id &&
+                        r.studentId === 1
+                );
+
+                return `
+                    <div class="card">
+
+                        <div class="card-header">
+
+                            <div>
+                                <div class="card-title">
+                                    ${q.title}
+                                </div>
+
+                                <div class="card-description">
+                                    ${course?.title || ""}
+                                </div>
+                            </div>
+
+                            ${
+                                result
+                                ? `
+                                    <span class="badge badge-green">
+                                        ${result.score}%
+                                    </span>
+                                `
+                                : `
+                                    <span class="badge badge-purple">
+                                        Not Taken
+                                    </span>
+                                `
+                            }
+
+                        </div>
+
+                        <div class="card-body">
+
+                            <div class="text-muted" style="font-size:12px">
+                                ${q.questions.length} questions
+                            </div>
+
+                            <button
+                                class="btn btn-primary btn-block mt-16"
+                                onclick="openQuiz(${q.id})"
+                            >
+                                ${
+                                    result
+                                    ? "Retake Quiz"
+                                    : "Start Quiz"
+                                }
+                            </button>
+
+                        </div>
+
+                    </div>
+                `;
+            }).join("")}
+
+        </div>
+    `;
+}
+
+function openQuiz(id) {
+
+    state.selectedQuizId = id;
+    state.page = "take-quiz";
+
+    render();
+}
+
+function takeQuizPage() {
+
+    const quiz = data.quizzes.find(
+        q => q.id === state.selectedQuizId
+    );
+
+    if (!quiz) {
+        return `<div class="empty">Quiz not found.</div>`;
+    }
+
+    return `
+        <div class="page-header">
+
+            <div>
+
+                <h1 class="page-heading">
+                    ${quiz.title}
+                </h1>
+
+                <div class="page-description">
+                    ${quiz.questions.length} questions
+                </div>
+
+            </div>
+
+            <button
+                class="btn"
+                onclick="navigate('quizzes')"
+            >
+                Exit Quiz
+            </button>
+
+        </div>
+
+        <div class="card">
+
+            <div class="card-body">
+
+                ${quiz.questions.map((q,index) => `
+
+                    <div class="quiz-question">
+
+                        <div class="quiz-question-title">
+                            ${index + 1}. ${q.question}
+                        </div>
+
+                        ${q.options.map((option,i) => `
+
+                            <label class="quiz-option">
+
+                                <input
+                                    type="radio"
+                                    name="question_${q.id}"
+                                    value="${i}"
+                                >
+
+                                ${option}
+
+                            </label>
+
+                        `).join("")}
+
+                    </div>
+
+                `).join("")}
+
+                <button
+                    class="btn btn-primary"
+                    onclick="submitQuiz()"
+                >
+                    Submit Quiz
+                </button>
+
+            </div>
+
+        </div>
+    `;
+}
+
+function submitQuiz() {
+
+    const quiz = data.quizzes.find(
+        q => q.id === state.selectedQuizId
+    );
+
+    let correct = 0;
+
+    quiz.questions.forEach(q => {
+
+        const selected = document.querySelector(
+            `input[name="question_${q.id}"]:checked`
+        );
+
+        if (
+            selected &&
+            Number(selected.value) === q.answer
+        ) {
+            correct++;
+        }
+    });
+
+    const score = Math.round(
+        (correct / quiz.questions.length) * 100
+    );
+
+    data.quizResults.push({
+        id: Date.now(),
+        quizId: quiz.id,
+        studentId: 1,
+        score,
+        date: new Date().toISOString().slice(0,10)
+    });
+
+    saveData();
+
+    state.page = "quiz-result";
+
+    render();
+
+    toast("Quiz submitted.", "success");
+}
+
+function quizResultPage() {
+
+    const quiz = data.quizzes.find(
+        q => q.id === state.selectedQuizId
+    );
+
+    const results = data.quizResults
+        .filter(
+            r =>
+                r.quizId === state.selectedQuizId &&
+                r.studentId === 1
+        )
+        .sort((a,b) =>
+            b.id - a.id
+        );
+
+    const result = results[0];
+
+    return `
+        <div class="page-header">
+
+            <button
+                class="btn btn-sm"
+                onclick="navigate('quizzes')"
+            >
+                ← Back to Quizzes
+            </button>
+
+        </div>
+
+        <div
+            class="card"
+            style="max-width:650px;margin:auto;text-align:center"
+        >
+
+            <div class="card-body">
+
+                <div style="font-size:40px">
+                    ${
+                        result.score >= 50
+                        ? "🎉"
+                        : "📚"
+                    }
+                </div>
+
+                <h2>
+                    ${quiz.title}
+                </h2>
+
+                <div class="result-circle">
+                    ${result.score}%
+                </div>
+
+                <div style="font-size:18px;font-weight:700">
+                    ${
+                        result.score >= 80
+                        ? "Excellent!"
+                        : result.score >= 50
+                        ? "Passed!"
+                        : "Keep Learning!"
+                    }
+                </div>
+
+                <p class="text-muted">
+                    Your quiz score is ${result.score}%.
+                </p>
+
+                <div class="actions" style="justify-content:center">
+
+                    <button
+                        class="btn btn-primary"
+                        onclick="openQuiz(${quiz.id})"
+                    >
+                        Retake Quiz
+                    </button>
+
+                    <button
+                        class="btn"
+                        onclick="navigate('quizzes')"
+                    >
+                        Back to Quizzes
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+    `;
+}
+
+/* =========================================================
+   CALENDAR
+   ========================================================= */
+
+function calendarPage() {
+
+    return `
+        <div class="page-header">
+
+            <div>
+                <h1 class="page-heading">Calendar</h1>
+                <div class="page-description">
+                    Manage your learning and teaching schedule.
+                </div>
+            </div>
+
+            <button
+                class="btn btn-primary"
+                onclick="openCreateEventModal()"
+            >
+                + Add Event
+            </button>
+
+        </div>
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <div class="card-title">
+                    October 2026
+                </div>
+
+                <div class="actions">
+
+                    <button
+                        class="btn btn-sm"
+                        onclick="toast('Previous month demo.')"
+                    >
+                        ←
+                    </button>
+
+                    <button
+                        class="btn btn-sm"
+                        onclick="toast('Today selected.')"
+                    >
+                        Today
+                    </button>
+
+                    <button
+                        class="btn btn-sm"
+                        onclick="toast('Next month demo.')"
+                    >
+                        →
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="calendar">
+
+                    ${[
+                        "Sun",
+                        "Mon",
+                        "Tue",
+                        "Wed",
+                        "Thu",
+                        "Fri",
+                        "Sat"
+                    ].map(day => `
+                        <div class="calendar-head">
+                            ${day}
+                        </div>
+                    `).join("")}
+
+                    ${generateCalendarDays()}
+
+                </div>
+
+            </div>
+
+        </div>
+    `;
+}
+
+function generateCalendarDays() {
+
+    let html = "";
+
+    for (let i = 1; i <= 31; i++) {
+
+        const date = `2026-10-${String(i).padStart(2,"0")}`;
+
+        const events = data.events.filter(
+            e => e.date === date
+        );
+
+        html += `
+            <div class="calendar-day">
+
+                <div class="calendar-day-number">
+                    ${i}
+                </div>
+
+                ${events.map(e => `
+                    <div
+                        class="calendar-event"
+                        onclick="toast('${escapeHtml(e.title)}')"
+                    >
+                        ${escapeHtml(e.title)}
+                    </div>
+                `).join("")}
+
+            </div>
+        `;
+    }
+
+    return html;
+}
+
+/* =========================================================
+   PROGRESS
+   ========================================================= */
+
+function studentProgress() {
+
+    return `
+        <div class="page-header">
+
+            <div>
+                <h1 class="page-heading">My Progress</h1>
+                <div class="page-description">
+                    Track your learning progress.
+                </div>
+            </div>
+
+        </div>
+
+        <div class="grid grid-2">
+
+            ${data.courses.map(course => {
+
+                const lessons = data.lessons.filter(
+                    l => l.courseId === course.id
+                );
+
+                const completed = lessons.filter(
+                    l => l.completed
+                ).length;
+
+                const percentage = lessons.length
+                    ? Math.round(
+                        completed / lessons.length * 100
+                      )
+                    : course.progress;
+
+                return `
+                    <div class="card">
+
+                        <div class="card-body">
+
+                            <div class="flex justify-between">
+
+                                <div>
+                                    <div style="font-size:14px;font-weight:700">
+                                        ${course.title}
+                                    </div>
+
+                                    <div class="text-muted" style="font-size:11px">
+                                        ${completed}/${lessons.length} lessons
+                                    </div>
+                                </div>
+
+                                <strong>
+                                    ${percentage}%
+                                </strong>
+
+                            </div>
+
+                            <div class="progress mt-16">
+
+                                <div
+                                    class="progress-bar"
+                                    style="width:${percentage}%"
+                                ></div>
+
+                            </div>
+
+                            <button
+                                class="btn btn-sm mt-16"
+                                onclick="openCourse(${course.id})"
+                            >
+                                Continue Learning
+                            </button>
+
+                        </div>
+
+                    </div>
+                `;
+
+            }).join("")}
+
+        </div>
+    `;
+}
+
+/* =========================================================
+   CERTIFICATES
+   ========================================================= */
+
+function certificatesPage() {
+
+    return `
+        <div class="page-header">
+
+            <div>
+                <h1 class="page-heading">Certificates</h1>
+                <div class="page-description">
+                    Certificates you have earned.
+                </div>
+            </div>
+
+        </div>
+
+        ${
+            data.certificates.length
+            ? `
+                <div class="grid grid-2">
+
+                    ${data.certificates.map(c => {
+
+                        const course = data.courses.find(
+                            x => x.id === c.courseId
+                        );
+
+                        return `
+                            <div class="card">
+
+                                <div class="card-body">
+
+                                    <div style="
+                                        text-align:center;
+                                        padding:25px;
+                                        border:2px solid #e2e8f0;
+                                        border-radius:10px;
+                                    ">
+
+                                        <div style="font-size:45px">
+                                            🏆
+                                        </div>
+
+                                        <div
+                                            class="text-muted"
+                                            style="font-size:10px;letter-spacing:.1em"
+                                        >
+                                            CERTIFICATE OF COMPLETION
+                                        </div>
+
+                                        <h2 style="font-size:19px">
+                                            ${course?.title || c.title}
+                                        </h2>
+
+                                        <p
+                                            class="text-muted"
+                                            style="font-size:11px"
+                                        >
+                                            Completed on ${c.date}
+                                        </p>
+
+                                        <button
+                                            class="btn btn-primary"
+                                            onclick="toast('Certificate download demo.')"
+                                        >
+                                            Download Certificate
+                                        </button>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        `;
+
+                    }).join("")}
+
+                </div>
+            `
+            : `
+                <div class="card">
+                    <div class="empty">
+                        <div class="empty-icon">🏆</div>
+                        No certificates yet.
+                    </div>
+                </div>
+            `
+        }
+    `;
+}
+
+/* =========================================================
+   MESSAGES
+   ========================================================= */
+
+function messagesPage() {
+
+    const myMessages = data.messages.filter(
+        m =>
+            m.from === state.role ||
+            m.to === state.role
+    );
+
+    return `
+        <div class="page-header">
+
+            <div>
+                <h1 class="page-heading">Messages</h1>
+                <div class="page-description">
+                    Communicate with ${
+                        state.role === "teacher"
+                        ? "your students"
+                        : "your teacher"
+                    }.
+                </div>
+            </div>
+
+            <button
+                class="btn btn-primary"
+                onclick="openMessageModal()"
+            >
+                + New Message
+            </button>
+
+        </div>
+
+        <div class="card">
+
+            <div class="card-body">
+
+                ${
+                    myMessages.length
+                    ? myMessages.map(m => {
+
+                        const mine = m.from === state.role;
+
+                        return `
+                            <div
+                                class="list-item"
+                                style="
+                                    display:flex;
+                                    justify-content:${
+                                        mine
+                                        ? "flex-end"
+                                        : "flex-start"
+                                    };
+                                "
+                            >
+
+                                <div
+                                    style="
+                                        max-width:70%;
+                                        padding:11px 14px;
+                                        border-radius:10px;
+                                        background:${
+                                            mine
+                                            ? "#dbeafe"
+                                            : "var(--muted)"
+                                        };
+                                        color:${
+                                            mine
+                                            ? "#1e3a8a"
+                                            : "var(--foreground)"
+                                        };
+                                    "
+                                >
+
+                                    <div style="font-size:12px;font-weight:700">
+                                        ${mine ? "You" : m.from}
+                                    </div>
+
+                                    <div
+                                        style="
+                                            font-size:13px;
+                                            margin-top:5px;
+                                        "
+                                    >
+                                        ${m.text}
+                                    </div>
+
+                                    <div
+                                        style="
+                                            font-size:9px;
+                                            opacity:.7;
+                                            margin-top:5px;
+                                        "
+                                    >
+                                        ${m.date}
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        `;
+
+                    }).join("")
+                    : `
+                        <div class="empty">
+                            <div class="empty-icon">💬</div>
+                            No messages.
+                        </div>
+                    `
+                }
+
+            </div>
+
+        </div>
+    `;
+}
+
+/* =========================================================
+   NOTIFICATIONS
+   ========================================================= */
+
+function notificationsPage() {
+
+    const notifications = data.notifications.filter(
+        n => n.role === state.role
+    );
+
+    return `
+        <div class="page-header">
+
+            <div>
+                <h1 class="page-heading">Notifications</h1>
+                <div class="page-description">
+                    Stay updated with your latest activity.
+                </div>
+            </div>
+
+            <button
+                class="btn"
+                onclick="markAllNotificationsRead()"
+            >
+                Mark All Read
+            </button>
+
+        </div>
+
+        <div class="card">
+
+            <div class="card-body">
+
+                ${
+                    notifications.length
+                    ? notifications.map(n => `
+                        <div
+                            class="list-item"
+                            style="
+                                cursor:pointer;
+                                opacity:${n.read ? ".65" : "1"};
+                            "
+                            onclick="markNotificationRead(${n.id})"
+                        >
+
+                            <div class="flex items-center gap-12">
+
+                                <div class="avatar">
+                                    ${n.read ? "✓" : "!"}
+                                </div>
+
+                                <div style="flex:1">
+
+                                    <div style="font-size:13px;font-weight:700">
+                                        ${n.title}
+                                    </div>
+
+                                    <div class="text-muted" style="font-size:11px;margin-top:3px">
+                                        ${n.text}
+                                    </div>
+
+                                </div>
+
+                                ${
+                                    !n.read
+                                    ? `<span class="badge badge-blue">New</span>`
+                                    : ""
+                                }
+
+                            </div>
+
+                        </div>
+                    `).join("")
+                    : `
+                        <div class="empty">
+                            No notifications.
+                        </div>
+                    `
+                }
+
+            </div>
+
+        </div>
+    `;
+}
+
+/* =========================================================
+   REPORTS
+   ========================================================= */
+
+function reportsPage() {
+
+    const average = Math.round(
+        data.students.reduce(
+            (sum,s) => sum + s.progress,
+            0
+        ) / data.students.length
+    );
+
+    return `
+        <div class="page-header">
+
+            <div>
+                <h1 class="page-heading">Reports</h1>
+                <div class="page-description">
+                    Teaching and student performance reports.
+                </div>
+            </div>
+
+            <button
+                class="btn"
+                onclick="toast('Report export demo.')"
+            >
+                Export Report
+            </button>
+
+        </div>
+
+        <div class="grid grid-4 mb-20">
+
+            ${statCard("Students", data.students.length, "👨‍🎓", "Total students")}
+
+            ${statCard("Courses", data.courses.length, "📚", "Active courses")}
+
+            ${statCard("Average Progress", average + "%", "📈", "Student average")}
+
+            ${statCard(
+                "Submissions",
+                data.submissions.length,
+                "📥",
+                "Total submissions"
+            )}
+
+        </div>
+
+        <div class="grid grid-2">
+
+            <div class="card">
+
+                <div class="card-header">
+                    <div class="card-title">
+                        Student Progress
+                    </div>
+                </div>
+
+                <div class="card-body">
+
+                    ${data.students.map(s => `
+                        <div class="progress-row">
+
+                            <div class="progress-header">
+
+                                <span>
+                                    ${s.name}
+                                </span>
+
+                                <strong>
+                                    ${s.progress}%
+                                </strong>
+
+                            </div>
+
+                            <div class="progress">
+
+                                <div
+                                    class="progress-bar"
+                                    style="width:${s.progress}%"
+                                ></div>
+
+                            </div>
+
+                        </div>
+                    `).join("")}
+
+                </div>
+
+            </div>
+
+            <div class="card">
+
+                <div class="card-header">
+                    <div class="card-title">
+                        Course Performance
+                    </div>
+                </div>
+
+                <div class="card-body">
+
+                    ${data.courses.map(c => `
+                        <div class="progress-row">
+
+                            <div class="progress-header">
+
+                                <span>
+                                    ${c.title}
+                                </span>
+
+                                <strong>
+                                    ${c.progress}%
+                                </strong>
+
+                            </div>
+
+                            <div class="progress">
+
+                                <div
+                                    class="progress-bar"
+                                    style="width:${c.progress}%"
+                                ></div>
+
+                            </div>
+
+                        </div>
+                    `).join("")}
+
+                </div>
+
+            </div>
+
+        </div>
+    `;
+}
+
+/* =========================================================
+   PROFILE
+   ========================================================= */
+
+function profilePage() {
+
+    const isTeacher = state.role === "teacher";
+
+    return `
+        <div class="page-header">
+
+            <div>
+                <h1 class="page-heading">My Profile</h1>
+                <div class="page-description">
+                    Manage your account information.
+                </div>
+            </div>
+
+            <button
+                class="btn btn-primary"
+                onclick="openProfileModal()"
+            >
+                Edit Profile
+            </button>
+
+        </div>
+
+        <div class="grid grid-3">
+
+            <div class="card">
+
+                <div class="card-body" style="text-align:center">
+
+                    <div
+                        class="avatar"
+                        style="
+                            width:90px;
+                            height:90px;
+                            font-size:28px;
+                            margin:auto;
+                        "
+                    >
+                        ${isTeacher ? "T" : "S"}
+                    </div>
+
+                    <h2 style="font-size:20px">
+                        ${isTeacher ? "Teacher" : "Student"}
+                    </h2>
+
+                    <span class="badge badge-blue">
+                        ${state.role}
+                    </span>
+
+                </div>
+
+            </div>
+
+            <div
+                class="card"
+                style="grid-column:span 2"
+            >
+
+                <div class="card-header">
+                    <div class="card-title">
+                        Account Information
+                    </div>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="grid grid-2">
+
+                        <div>
+                            <div class="text-muted" style="font-size:11px">
+                                Username
+                            </div>
+                            <strong>${state.user}</strong>
+                        </div>
+
+                        <div>
+                            <div class="text-muted" style="font-size:11px">
+                                Role
+                            </div>
+                            <strong>${state.role}</strong>
+                        </div>
+
+                        <div>
+                            <div class="text-muted" style="font-size:11px">
+                                Email
+                            </div>
+                            <strong>
+                                ${state.user}@eteaching.local
+                            </strong>
+                        </div>
+
+                        <div>
+                            <div class="text-muted" style="font-size:11px">
+                                Account Status
+                            </div>
+
+                            <span class="badge badge-green">
+                                Active
+                            </span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    `;
+}
+
+/* =========================================================
+   SETTINGS
+   ========================================================= */
+
+function settingsPage() {
+
+    return `
+        <div class="page-header">
+
+            <div>
+                <h1 class="page-heading">Settings</h1>
+                <div class="page-description">
+                    Customize your E-Teaching experience.
+                </div>
+            </div>
+
+        </div>
+
+        <div class="grid grid-2">
+
+            <div class="card">
+
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">
+                            Appearance
+                        </div>
+
+                        <div class="card-description">
+                            Change how the application looks.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body">
+
+                    <label
+                        class="flex items-center justify-between"
+                        style="padding:12px 0;cursor:pointer"
+                    >
+
+                        <div>
+                            <strong style="font-size:13px">
+                                Dark Mode
+                            </strong>
+
+                            <div class="text-muted" style="font-size:11px">
+                                Use dark theme
+                            </div>
+                        </div>
+
+                        <input
+                            type="checkbox"
+                            ${
+                                data.settings.darkMode
+                                ? "checked"
+                                : ""
+                            }
+                            onchange="toggleTheme(this.checked)"
+                        >
+
+                    </label>
+
+                </div>
+
+            </div>
+
+            <div class="card">
+
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">
+                            Notifications
+                        </div>
+
+                        <div class="card-description">
+                            Choose which notifications you receive.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body">
+
+                    ${settingToggle(
+                        "Email Notifications",
+                        "Receive email notifications",
+                        "emailNotification"
+                    )}
+
+                    ${settingToggle(
+                        "Assignment Notifications",
+                        "New assignment alerts",
+                        "assignmentNotification"
+                    )}
+
+                    ${settingToggle(
+                        "Quiz Notifications",
+                        "Upcoming quiz alerts",
+                        "quizNotification"
+                    )}
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="card mt-16">
+
+            <div class="card-header">
+
+                <div>
+                    <div class="card-title">
+                        Demo Data
+                    </div>
+
+                    <div class="card-description">
+                        Reset the frontend demo to its original state.
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="card-body">
+
+                <button
+                    class="btn btn-danger"
+                    onclick="resetDemoData()"
+                >
+                    Reset Demo Data
+                </button>
+
+            </div>
+
+        </div>
+    `;
+}
+
+function settingToggle(title, description, key) {
+
+    return `
+        <label
+            class="flex items-center justify-between"
+            style="padding:11px 0;cursor:pointer"
+        >
+
+            <div>
+                <strong style="font-size:13px">
+                    ${title}
+                </strong>
+
+                <div class="text-muted" style="font-size:11px">
+                    ${description}
+                </div>
+            </div>
+
+            <input
+                type="checkbox"
+                ${
+                    data.settings[key]
+                    ? "checked"
+                    : ""
+                }
+                onchange="changeSetting('${key}',this.checked)"
+            >
+
+        </label>
+    `;
+}
+
+function changeSetting(key,value) {
+
+    data.settings[key] = value;
+
+    saveData();
+
+    toast("Setting updated.", "success");
+}
+
+function toggleTheme(forceValue) {
+
+    if (typeof forceValue === "boolean") {
+        data.settings.darkMode = forceValue;
+    } else {
+        data.settings.darkMode = !data.settings.darkMode;
+    }
+
+    saveData();
+
+    applyTheme();
+
+    if (state.role) {
+        render();
+    }
+}
+
+function applyTheme() {
+
+    document.documentElement.dataset.theme =
+        data.settings.darkMode
+        ? "dark"
+        : "light";
+}
+
+function resetDemoData() {
+
+    if (!confirm("Reset all demo data?")) {
+        return;
+    }
+
+    localStorage.removeItem(STORAGE_KEY);
+
+    data = getData();
+
+    applyTheme();
+
+    render();
+
+    toast("Demo data has been reset.", "success");
+}
+
+/* =========================================================
+   MODALS - COURSE
+   ========================================================= */
+
+function openCreateCourseModal() {
+
+    openModal(
+        "Create Course",
+        `
+            <div class="form-group">
+                <label class="form-label">Course Code</label>
+                <input id="courseCode" class="input" placeholder="CS301">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Course Name</label>
+                <input id="courseTitle" class="input" placeholder="Advanced Java">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Category</label>
+                <select id="courseCategory" class="select">
+                    <option>Programming</option>
+                    <option>Database</option>
+                    <option>Web Development</option>
+                    <option>Software Engineering</option>
+                    <option>Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Description</label>
+                <textarea
+                    id="courseDescription"
+                    class="textarea"
+                    placeholder="Course description..."
+                ></textarea>
+            </div>
+        `,
+        `
+            <button class="btn" onclick="closeModal()">
+                Cancel
+            </button>
+
+            <button class="btn btn-primary" onclick="createCourse()">
+                Create Course
+            </button>
+        `
+    );
+}
+
+function createCourse() {
+
+    const code = document.getElementById("courseCode").value.trim();
+    const title = document.getElementById("courseTitle").value.trim();
+    const category = document.getElementById("courseCategory").value;
+    const description = document
+        .getElementById("courseDescription")
+        .value
+        .trim();
+
+    if (!code || !title) {
+        toast("Course code and name are required.", "error");
+        return;
+    }
+
+    data.courses.push({
+        id: Date.now(),
+        code,
+        title,
+        category,
+        description: description || "New course",
+        teacher: "teacher",
+        students: 0,
+        progress: 0,
+        color: "blue"
+    });
+
+    saveData();
+    closeModal();
+    render();
+
+    toast("Course created successfully.", "success");
+}
+
+function openEditCourseModal(id) {
+
+    const course = data.courses.find(c => c.id === id);
+
+    openModal(
+        "Edit Course",
+        `
+            <div class="form-group">
+                <label class="form-label">Course Code</label>
+                <input
+                    id="editCourseCode"
+                    class="input"
+                    value="${escapeAttr(course.code)}"
+                >
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Course Name</label>
+                <input
+                    id="editCourseTitle"
+                    class="input"
+                    value="${escapeAttr(course.title)}"
+                >
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Description</label>
+                <textarea
+                    id="editCourseDescription"
+                    class="textarea"
+                >${escapeHtml(course.description)}</textarea>
+            </div>
+        `,
+        `
+            <button class="btn" onclick="closeModal()">
+                Cancel
+            </button>
+
+            <button
+                class="btn btn-primary"
+                onclick="updateCourse(${id})"
+            >
+                Save Changes
+            </button>
+        `
+    );
+}
+
+function updateCourse(id) {
+
+    const course = data.courses.find(c => c.id === id);
+
+    course.code = document.getElementById("editCourseCode").value.trim();
+    course.title = document.getElementById("editCourseTitle").value.trim();
+    course.description =
+        document.getElementById("editCourseDescription").value.trim();
+
+    saveData();
+
+    closeModal();
+    render();
+
+    toast("Course updated.", "success");
+}
+
+function deleteCourse(id) {
+
+    if (!confirm("Delete this course?")) {
+        return;
+    }
+
+    data.courses = data.courses.filter(c => c.id !== id);
+    data.lessons = data.lessons.filter(l => l.courseId !== id);
+    data.assignments = data.assignments.filter(a => a.courseId !== id);
+    data.quizzes = data.quizzes.filter(q => q.courseId !== id);
+
+    saveData();
+
+    navigate("courses");
+
+    toast("Course deleted.", "success");
+}
+
+/* =========================================================
+   MODALS - LESSON
+   ========================================================= */
+
+function openCreateLessonModal(courseId) {
+
+    openModal(
+        "Add Lesson",
+        `
+            <div class="form-group">
+
+                <label class="form-label">
+                    Lesson Title
+                </label>
+
+                <input
+                    id="lessonTitle"
+                    class="input"
+                    placeholder="Introduction to..."
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    Duration
+                </label>
+
+                <input
+                    id="lessonDuration"
+                    class="input"
+                    placeholder="45 min"
+                >
+
+            </div>
+        `,
+        `
+            <button class="btn" onclick="closeModal()">
+                Cancel
+            </button>
+
+            <button
+                class="btn btn-primary"
+                onclick="createLesson(${courseId})"
+            >
+                Add Lesson
+            </button>
+        `
+    );
+}
+
+function createLesson(courseId) {
+
+    const title = document
+        .getElementById("lessonTitle")
+        .value
+        .trim();
+
+    const duration = document
+        .getElementById("lessonDuration")
+        .value
+        .trim();
+
+    if (!title) {
+        toast("Lesson title is required.", "error");
+        return;
+    }
+
+    data.lessons.push({
+        id: Date.now(),
+        courseId,
+        title,
+        duration: duration || "30 min",
+        completed: false
+    });
+
+    saveData();
+
+    closeModal();
+    render();
+
+    toast("Lesson added.", "success");
+}
+
+/* =========================================================
+   MODALS - ASSIGNMENT
+   ========================================================= */
+
+function openCreateAssignmentModal() {
+
+    openModal(
+        "Create Assignment",
+        `
+            <div class="form-group">
+
+                <label class="form-label">
+                    Course
+                </label>
+
+                <select id="assignmentCourse" class="select">
+
+                    ${data.courses.map(c => `
+                        <option value="${c.id}">
+                            ${c.title}
+                        </option>
+                    `).join("")}
+
+                </select>
+
+            </div>
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    Assignment Title
+                </label>
+
+                <input
+                    id="assignmentTitle"
+                    class="input"
+                    placeholder="Build REST API"
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    Description
+                </label>
+
+                <textarea
+                    id="assignmentDescription"
+                    class="textarea"
+                ></textarea>
+
+            </div>
+
+            <div class="grid grid-2">
+
+                <div class="form-group">
+
+                    <label class="form-label">
+                        Due Date
+                    </label>
+
+                    <input
+                        id="assignmentDueDate"
+                        type="date"
+                        class="input"
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label class="form-label">
+                        Points
+                    </label>
+
+                    <input
+                        id="assignmentPoints"
+                        type="number"
+                        class="input"
+                        value="100"
+                    >
+
+                </div>
+
+            </div>
+        `,
+        `
+            <button class="btn" onclick="closeModal()">
+                Cancel
+            </button>
+
+            <button
+                class="btn btn-primary"
+                onclick="createAssignment()"
+            >
+                Create Assignment
+            </button>
+        `
+    );
+}
+
+function createAssignment() {
+
+    const courseId = Number(
+        document.getElementById("assignmentCourse").value
+    );
+
+    const title = document
+        .getElementById("assignmentTitle")
+        .value
+        .trim();
+
+    const description = document
+        .getElementById("assignmentDescription")
+        .value
+        .trim();
+
+    const dueDate =
+        document.getElementById("assignmentDueDate").value;
+
+    const points = Number(
+        document.getElementById("assignmentPoints").value
+    ) || 100;
+
+    if (!title || !dueDate) {
+        toast("Title and due date are required.", "error");
+        return;
+    }
+
+    data.assignments.push({
+        id: Date.now(),
+        courseId,
+        title,
+        description: description || "New assignment",
+        dueDate,
+        points
+    });
+
+    data.events.push({
+        id: Date.now() + 1,
+        title,
+        date: dueDate,
+        type: "Assignment"
+    });
+
+    saveData();
+
+    closeModal();
+    render();
+
+    toast("Assignment created.", "success");
+}
+
+function openEditAssignmentModal(id) {
+
+    const a = data.assignments.find(x => x.id === id);
+
+    openModal(
+        "Edit Assignment",
+        `
+            <div class="form-group">
+
+                <label class="form-label">
+                    Title
+                </label>
+
+                <input
+                    id="editAssignmentTitle"
+                    class="input"
+                    value="${escapeAttr(a.title)}"
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    Description
+                </label>
+
+                <textarea
+                    id="editAssignmentDescription"
+                    class="textarea"
+                >${escapeHtml(a.description)}</textarea>
+
+            </div>
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    Due Date
+                </label>
+
+                <input
+                    id="editAssignmentDueDate"
+                    type="date"
+                    class="input"
+                    value="${a.dueDate}"
+                >
+
+            </div>
+        `,
+        `
+            <button class="btn" onclick="closeModal()">
+                Cancel
+            </button>
+
+            <button
+                class="btn btn-primary"
+                onclick="updateAssignment(${id})"
+            >
+                Save Changes
+            </button>
+        `
+    );
+}
+
+function updateAssignment(id) {
+
+    const a = data.assignments.find(x => x.id === id);
+
+    a.title =
+        document.getElementById("editAssignmentTitle").value.trim();
+
+    a.description =
+        document.getElementById("editAssignmentDescription").value.trim();
+
+    a.dueDate =
+        document.getElementById("editAssignmentDueDate").value;
+
+    saveData();
+
+    closeModal();
+    render();
+
+    toast("Assignment updated.", "success");
+}
+
+/* =========================================================
+   GRADE
+   ========================================================= */
+
+function openGradeModal(id) {
+
+    const submission = data.submissions.find(
+        s => s.id === id
+    );
+
+    const student = data.students.find(
+        s => s.id === submission.studentId
+    );
+
+    const assignment = data.assignments.find(
+        a => a.id === submission.assignmentId
+    );
+
+    openModal(
+        "Grade Submission",
+        `
+            <div class="card" style="box-shadow:none">
+
+                <div class="card-body">
+
+                    <div class="text-muted" style="font-size:11px">
+                        Student
+                    </div>
+
+                    <strong>
+                        ${student?.name}
+                    </strong>
+
+                    <div class="text-muted" style="font-size:11px;margin-top:12px">
+                        Assignment
+                    </div>
+
+                    <strong>
+                        ${assignment?.title}
+                    </strong>
+
+                </div>
+
+            </div>
+
+            <div class="form-group mt-16">
+
+                <label class="form-label">
+                    Score (Max ${assignment.points})
+                </label>
+
+                <input
+                    id="gradeScore"
+                    type="number"
+                    min="0"
+                    max="${assignment.points}"
+                    class="input"
+                    value="${submission.score ?? ""}"
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    Feedback
+                </label>
+
+                <textarea
+                    class="textarea"
+                    placeholder="Good work..."
+                ></textarea>
+
+            </div>
+        `,
+        `
+            <button class="btn" onclick="closeModal()">
+                Cancel
+            </button>
+
+            <button
+                class="btn btn-primary"
+                onclick="saveGrade(${id})"
+            >
+                Save Grade
+            </button>
+        `
+    );
+}
+
+function saveGrade(id) {
+
+    const submission = data.submissions.find(
+        s => s.id === id
+    );
+
+    const score = Number(
+        document.getElementById("gradeScore").value
+    );
+
+    if (isNaN(score)) {
+        toast("Enter a valid score.", "error");
+        return;
+    }
+
+    submission.score = score;
+    submission.status = "Graded";
+
+    saveData();
+
+    closeModal();
+    render();
+
+    toast("Grade saved successfully.", "success");
+}
+
+/* =========================================================
+   QUIZ BUILDER
+   ========================================================= */
+
+function openCreateQuizModal() {
+
+    openModal(
+        "Create Quiz",
+        `
+            <div class="form-group">
+
+                <label class="form-label">
+                    Course
+                </label>
+
+                <select id="quizCourse" class="select">
+
+                    ${data.courses.map(c => `
+                        <option value="${c.id}">
+                            ${c.title}
+                        </option>
+                    `).join("")}
+
+                </select>
+
+            </div>
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    Quiz Title
+                </label>
+
+                <input
+                    id="quizTitle"
+                    class="input"
+                    placeholder="Java Basics Quiz"
+                >
+
+            </div>
+        `,
+        `
+            <button class="btn" onclick="closeModal()">
+                Cancel
+            </button>
+
+            <button
+                class="btn btn-primary"
+                onclick="createQuiz()"
+            >
+                Create Quiz
+            </button>
+        `
+    );
+}
+
+function createQuiz() {
+
+    const courseId = Number(
+        document.getElementById("quizCourse").value
+    );
+
+    const title = document
+        .getElementById("quizTitle")
+        .value
+        .trim();
+
+    if (!title) {
+        toast("Quiz title is required.", "error");
+        return;
+    }
+
+    const id = Date.now();
+
+    data.quizzes.push({
+        id,
+        courseId,
+        title,
+        questions: [
+            {
+                id: 1,
+                question: "Sample question?",
+                options: [
+                    "Answer A",
+                    "Answer B",
+                    "Answer C",
+                    "Answer D"
+                ],
+                answer: 0
+            }
+        ]
+    });
+
+    saveData();
+
+    closeModal();
+    render();
+
+    toast("Quiz created.", "success");
+}
+
+function openQuizBuilder(id) {
+
+    const quiz = data.quizzes.find(
+        q => q.id === id
+    );
+
+    openModal(
+        "Quiz Builder",
+        `
+            <div class="form-group">
+
+                <label class="form-label">
+                    Quiz Title
+                </label>
+
+                <input
+                    id="builderQuizTitle"
+                    class="input"
+                    value="${escapeAttr(quiz.title)}"
+                >
+
+            </div>
+
+            <div style="margin-bottom:10px;font-weight:700">
+                Questions
+            </div>
+
+            ${quiz.questions.map((q,index) => `
+                <div
+                    style="
+                        padding:13px;
+                        border:1px solid var(--border);
+                        border-radius:8px;
+                        margin-bottom:8px;
+                    "
+                >
+
+                    <strong style="font-size:12px">
+                        Question ${index + 1}
+                    </strong>
+
+                    <div class="text-muted" style="font-size:11px;margin-top:5px">
+                        ${q.question}
+                    </div>
+
+                </div>
+            `).join("")}
+
+            <button
+                class="btn"
+                onclick="addQuestionToQuiz(${id})"
+            >
+                + Add Question
+            </button>
+        `,
+        `
+            <button class="btn" onclick="closeModal()">
+                Close
+            </button>
+
+            <button
+                class="btn btn-primary"
+                onclick="saveQuizBuilder(${id})"
+            >
+                Save Quiz
+            </button>
+        `
+    );
+}
+
+function saveQuizBuilder(id) {
+
+    const quiz = data.quizzes.find(q => q.id === id);
+
+    quiz.title =
+        document.getElementById("builderQuizTitle").value.trim();
+
+    saveData();
+
+    closeModal();
+    render();
+
+    toast("Quiz updated.", "success");
+}
+
+function addQuestionToQuiz(id) {
+
+    closeModal();
+
+    openModal(
+        "Add Question",
+        `
+            <div class="form-group">
+
+                <label class="form-label">
+                    Question
+                </label>
+
+                <input
+                    id="newQuestion"
+                    class="input"
+                    placeholder="What is Spring Boot?"
+                >
+
+            </div>
+
+            <div class="grid grid-2">
+
+                <div class="form-group">
+                    <label class="form-label">Option A</label>
+                    <input id="optionA" class="input">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Option B</label>
+                    <input id="optionB" class="input">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Option C</label>
+                    <input id="optionC" class="input">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Option D</label>
+                    <input id="optionD" class="input">
+                </div>
+
+            </div>
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    Correct Answer
+                </label>
+
+                <select id="correctAnswer" class="select">
+                    <option value="0">A</option>
+                    <option value="1">B</option>
+                    <option value="2">C</option>
+                    <option value="3">D</option>
+                </select>
+
+            </div>
+        `,
+        `
+            <button class="btn" onclick="closeModal()">
+                Cancel
+            </button>
+
+            <button
+                class="btn btn-primary"
+                onclick="saveNewQuestion(${id})"
+            >
+                Add Question
+            </button>
+        `
+    );
+}
+
+function saveNewQuestion(id) {
+
+    const question = document
+        .getElementById("newQuestion")
+        .value
+        .trim();
+
+    const options = [
+        document.getElementById("optionA").value.trim(),
+        document.getElementById("optionB").value.trim(),
+        document.getElementById("optionC").value.trim(),
+        document.getElementById("optionD").value.trim()
+    ];
+
+    const answer = Number(
+        document.getElementById("correctAnswer").value
+    );
+
+    if (!question || options.some(x => !x)) {
+        toast("Complete all question fields.", "error");
+        return;
+    }
+
+    const quiz = data.quizzes.find(q => q.id === id);
+
+    quiz.questions.push({
+        id: Date.now(),
+        question,
+        options,
+        answer
+    });
+
+    saveData();
+
+    closeModal();
+
+    openQuizBuilder(id);
+
+    toast("Question added.", "success");
+}
+
+/* =========================================================
+   EVENT MODAL
+   ========================================================= */
+
+function openCreateEventModal() {
+
+    openModal(
+        "Add Calendar Event",
+        `
+            <div class="form-group">
+
+                <label class="form-label">
+                    Event Title
+                </label>
+
+                <input
+                    id="eventTitle"
+                    class="input"
+                    placeholder="Class Meeting"
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    Date
+                </label>
+
+                <input
+                    id="eventDate"
+                    type="date"
+                    class="input"
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    Type
+                </label>
+
+                <select id="eventType" class="select">
+                    <option>Lesson</option>
+                    <option>Assignment</option>
+                    <option>Quiz</option>
+                    <option>Meeting</option>
+                    <option>Other</option>
+                </select>
+
+            </div>
+        `,
+        `
+            <button class="btn" onclick="closeModal()">
+                Cancel
+            </button>
+
+            <button
+                class="btn btn-primary"
+                onclick="createEvent()"
+            >
+                Add Event
+            </button>
+        `
+    );
+}
+
+function createEvent() {
+
+    const title =
+        document.getElementById("eventTitle").value.trim();
+
+    const date =
+        document.getElementById("eventDate").value;
+
+    const type =
+        document.getElementById("eventType").value;
+
+    if (!title || !date) {
+        toast("Title and date are required.", "error");
+        return;
+    }
+
+    data.events.push({
+        id: Date.now(),
+        title,
+        date,
+        type
+    });
+
+    saveData();
+
+    closeModal();
+    render();
+
+    toast("Event added.", "success");
+}
+
+/* =========================================================
+   MESSAGE MODAL
+   ========================================================= */
+
+function openMessageModal() {
+
+    openModal(
+        "New Message",
+        `
+            <div class="form-group">
+
+                <label class="form-label">
+                    To
+                </label>
+
+                <input
+                    class="input"
+                    value="${
+                        state.role === "teacher"
+                        ? "student"
+                        : "teacher"
+                    }"
+                    disabled
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    Message
+                </label>
+
+                <textarea
+                    id="messageText"
+                    class="textarea"
+                    placeholder="Write your message..."
+                ></textarea>
+
+            </div>
+        `,
+        `
+            <button class="btn" onclick="closeModal()">
+                Cancel
+            </button>
+
+            <button
+                class="btn btn-primary"
+                onclick="sendMessage()"
+            >
+                Send Message
+            </button>
+        `
+    );
+}
+
+function sendMessage() {
+
+    const text =
+        document.getElementById("messageText").value.trim();
+
+    if (!text) {
+        toast("Message cannot be empty.", "error");
+        return;
+    }
+
+    data.messages.push({
+        id: Date.now(),
+        from: state.role,
+        to: state.role === "teacher" ? "student" : "teacher",
+        text,
+        date: new Date().toLocaleString()
+    });
+
+    saveData();
+
+    closeModal();
+    render();
+
+    toast("Message sent.", "success");
+}
+
+/* =========================================================
+   PROFILE MODAL
+   ========================================================= */
+
+function openProfileModal() {
+
+    openModal(
+        "Edit Profile",
+        `
+            <div class="form-group">
+
+                <label class="form-label">
+                    Display Name
+                </label>
+
+                <input
+                    id="profileName"
+                    class="input"
+                    value="${
+                        state.role === "teacher"
+                        ? "Teacher"
+                        : "Student"
+                    }"
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    Email
+                </label>
+
+                <input
+                    id="profileEmail"
+                    class="input"
+                    value="${state.user}@eteaching.local"
+                >
+
+            </div>
+        `,
+        `
+            <button class="btn" onclick="closeModal()">
+                Cancel
+            </button>
+
+            <button
+                class="btn btn-primary"
+                onclick="saveProfile()"
+            >
+                Save Profile
+            </button>
+        `
+    );
+}
+
+function saveProfile() {
+
+    closeModal();
+
+    toast("Profile updated in demo.", "success");
+}
+
+/* =========================================================
+   NOTIFICATIONS
+   ========================================================= */
+
+function markNotificationRead(id) {
+
+    const n = data.notifications.find(
+        x => x.id === id
+    );
+
+    if (n) {
+        n.read = true;
+        saveData();
+        render();
+    }
+}
+
+function markAllNotificationsRead() {
+
+    data.notifications
+        .filter(n => n.role === state.role)
+        .forEach(n => n.read = true);
+
+    saveData();
+
+    render();
+
+    toast("All notifications marked as read.", "success");
+}
+
+/* =========================================================
+   MODAL SYSTEM
+   ========================================================= */
+
+function openModal(title, body, footer = "") {
+
+    document.getElementById("modalTitle").innerHTML = title;
+    document.getElementById("modalBody").innerHTML = body;
+    document.getElementById("modalFooter").innerHTML = footer;
+
+    document
+        .getElementById("modalOverlay")
+        .classList.add("show");
+}
+
+function closeModal() {
+
+    document
+        .getElementById("modalOverlay")
+        .classList.remove("show");
+}
+
+document.getElementById("modalOverlay")
+    .addEventListener("click", function(e) {
+
+        if (e.target === this) {
+            closeModal();
+        }
+
+    });
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+
+function toast(message, type = "success") {
+
+    const container =
+        document.getElementById("toastContainer");
+
+    const item = document.createElement("div");
+
+    item.className = `toast ${type}`;
+
+    item.textContent = message;
+
+    container.appendChild(item);
+
+    setTimeout(() => {
+        item.remove();
+    }, 3000);
+}
+
+/* =========================================================
+   HELPERS
+   ========================================================= */
+
+function initials(name) {
+
+    return name
+        .split(" ")
+        .map(x => x[0])
+        .join("")
+        .substring(0,2)
+        .toUpperCase();
+}
+
+function escapeHtml(value) {
+
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+function escapeAttr(value) {
+    return escapeHtml(value);
+}
+
+/* =========================================================
+   MAIN RENDER
+   ========================================================= */
+
+function render() {
+
+    const root = document.getElementById("root");
+
+    if (!state.role) {
+        root.innerHTML = renderLogin();
+        return;
+    }
+
+    root.innerHTML = renderApp();
+}
+
+/* =========================================================
+   INIT
+   ========================================================= */
+
+loadSession();
+applyTheme();
+render();
+
+</script>
+
+</body>
+</html>
